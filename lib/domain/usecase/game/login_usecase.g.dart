@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'login_usecase.dart';
+part of 'join_game_usecase.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator

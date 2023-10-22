@@ -19,7 +19,7 @@ mixin RepositoryModule {
       getIt<SharedPreferenceHelper>(),
     ));
 
-    getIt.registerSingleton<UserRepository>(UserRepositoryImpl(
+    getIt.registerSingleton<GameRepository>(GameRepositoryImpl(
       getIt<SharedPreferenceHelper>(),
     ));
 

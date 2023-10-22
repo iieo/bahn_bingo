@@ -7,13 +7,12 @@ part 'form_store.g.dart';
 class FormStore = _FormStore with _$FormStore;
 
 abstract class _FormStore with Store {
-  // store for handling form errors
-  final FormErrorStore formErrorStore;
-
+  // stores:--------------------------------------------------------------------
+  final GameErrorStore gameErrorStore;
   // store for handling error messages
   final ErrorStore errorStore;
 
-  _FormStore(this.formErrorStore, this.errorStore) {
+  _FormStore(this.gameErrorStore, this.errorStore) {
     _setupValidations();
   }
 
@@ -22,89 +21,34 @@ abstract class _FormStore with Store {
 
   void _setupValidations() {
     _disposers = [
-      reaction((_) => userEmail, validateUserEmail),
-      reaction((_) => password, validatePassword),
-      reaction((_) => confirmPassword, validateConfirmPassword)
+      reaction((_) => gameId, validateGameId),
     ];
   }
 
   // store variables:-----------------------------------------------------------
   @observable
-  String userEmail = '';
-
-  @observable
-  String password = '';
-
-  @observable
-  String confirmPassword = '';
+  String gameId = '';
 
   @observable
   bool success = false;
 
   @computed
-  bool get canLogin =>
-      !formErrorStore.hasErrorsInLogin &&
-      userEmail.isNotEmpty &&
-      password.isNotEmpty;
-
-  @computed
-  bool get canRegister =>
-      !formErrorStore.hasErrorsInRegister &&
-      userEmail.isNotEmpty &&
-      password.isNotEmpty &&
-      confirmPassword.isNotEmpty;
-
-  @computed
-  bool get canForgetPassword =>
-      !formErrorStore.hasErrorInForgotPassword && userEmail.isNotEmpty;
+  bool get canJoin => gameErrorStore.gameIdError == null && gameId.length == 4;
 
   // actions:-------------------------------------------------------------------
   @action
-  void setUserId(String value) {
-    userEmail = value;
+  void setGameId(String value) {
+    gameId = value;
   }
 
   @action
-  void setPassword(String value) {
-    password = value;
-  }
-
-  @action
-  void setConfirmPassword(String value) {
-    confirmPassword = value;
-  }
-
-
-  @action
-  void validateUserEmail(String value) {
+  void validateGameId(String value) {
     if (value.isEmpty) {
-      formErrorStore.userEmail = "Email can't be empty";
+      gameErrorStore.gameIdError = "error_gameid_empty";
     } else if (!isEmail(value)) {
-      formErrorStore.userEmail = 'Please enter a valid email address';
+      gameErrorStore.gameIdError = 'error_gameid_length';
     } else {
-      formErrorStore.userEmail = null;
-    }
-  }
-
-  @action
-  void validatePassword(String value) {
-    if (value.isEmpty) {
-      formErrorStore.password = "Password can't be empty";
-    } else if (value.length < 6) {
-      formErrorStore.password = "Password must be at-least 6 characters long";
-    } else {
-      formErrorStore.password = null;
-    }
-  }
-
-  @action
-  void validateConfirmPassword(String value) {
-    if (value.isEmpty) {
-      formErrorStore.confirmPassword = "Confirm password can't be empty";
-    } else if (value != password) {
-      formErrorStore.confirmPassword = "Password doesn't match";
-    } else {
-      formErrorStore.confirmPassword = null;
+      gameErrorStore.gameIdError = null;
     }
   }
 
@@ -116,30 +60,13 @@ abstract class _FormStore with Store {
   }
 
   void validateAll() {
-    validatePassword(password);
-    validateUserEmail(userEmail);
+    validateGameId(gameId);
   }
 }
 
-class FormErrorStore = _FormErrorStore with _$FormErrorStore;
+class GameErrorStore = _GameErrorStore with _$GameErrorStore;
 
-abstract class _FormErrorStore with Store {
+abstract class _GameErrorStore with Store {
   @observable
-  String? userEmail;
-
-  @observable
-  String? password;
-
-  @observable
-  String? confirmPassword;
-
-  @computed
-  bool get hasErrorsInLogin => userEmail != null || password != null;
-
-  @computed
-  bool get hasErrorsInRegister =>
-      userEmail != null || password != null || confirmPassword != null;
-
-  @computed
-  bool get hasErrorInForgotPassword => userEmail != null;
+  String? gameIdError;
 }

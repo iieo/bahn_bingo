@@ -1,7 +1,7 @@
 import 'package:boilerplate/constants/colors.dart';
+import 'package:boilerplate/core/stores/game/game_store.dart';
 import 'package:boilerplate/core/widgets/button_widget.dart';
 import 'package:boilerplate/di/service_locator.dart';
-import 'package:boilerplate/presentation/login/store/login_store.dart';
 import 'package:boilerplate/utils/locale/app_localization.dart';
 import 'package:boilerplate/utils/routes/routes.dart';
 import 'package:flutter/material.dart';
@@ -84,7 +84,7 @@ class WelcomeScreen extends StatelessWidget {
                   text: AppLocalizations.of(context).translate('join_game'),
                   type: ButtonType.PLAIN,
                   onPressed: () {
-                    navigate(context, true);
+                    navigateJoinGame(context);
                   },
                 ),
                 const SizedBox(
@@ -94,7 +94,7 @@ class WelcomeScreen extends StatelessWidget {
                   text: AppLocalizations.of(context).translate('create_game'),
                   type: ButtonType.PRIMARY,
                   onPressed: () {
-                    navigate(context, false);
+                    navigateCreateGame(context);
                   },
                 )
               ],
@@ -105,12 +105,17 @@ class WelcomeScreen extends StatelessWidget {
     );
   }
 
-  void navigate(BuildContext context, bool isLogin) {
-    final UserStore _userStore = getIt<UserStore>();
-    _userStore.setIsLogin(isLogin);
+  void navigateJoinGame(BuildContext context) {
     Future.delayed(Duration(milliseconds: 0), () {
       Navigator.of(context).pushNamedAndRemoveUntil(
-          Routes.login, (Route<dynamic> route) => false);
+          Routes.joinGame, (Route<dynamic> route) => false);
+    });
+  }
+
+  void navigateCreateGame(BuildContext context) {
+    Future.delayed(Duration(milliseconds: 0), () {
+      Navigator.of(context).pushNamedAndRemoveUntil(
+          Routes.createGame, (Route<dynamic> route) => false);
     });
   }
 }

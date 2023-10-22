@@ -1,5 +1,5 @@
+import 'package:boilerplate/presentation/create_game/create_game.dart';
 import 'package:boilerplate/presentation/home/home.dart';
-import 'package:boilerplate/presentation/login/login.dart';
 import 'package:boilerplate/presentation/welcome/welcome.dart';
 import 'package:flutter/material.dart';
 
@@ -11,9 +11,12 @@ class Routes {
   static const String login = '/login';
   static const String home = '/post';
   static const String welcome = '/welcome';
+  static const String joinGame = '/join';
+  static const String createGame = '/create';
 
   static final routes = <String, WidgetBuilder>{
-    login: (BuildContext context) => LoginScreen(),
+    joinGame: (BuildContext context) => CreateGameScreen(),
+    createGame: (BuildContext context) => CreateGameScreen(),
     home: (BuildContext context) => HomeScreen(),
     welcome: (BuildContext context) => WelcomeScreen()
   };

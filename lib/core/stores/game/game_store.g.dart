@@ -9,18 +9,18 @@ part of 'game_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$GameStore on _GameStore, Store {
-  late final _$gameIdAtom = Atom(name: '_GameStore.gameId', context: context);
+  late final _$gameAtom = Atom(name: '_GameStore.game', context: context);
 
   @override
-  String get gameId {
-    _$gameIdAtom.reportRead();
-    return super.gameId;
+  Game? get game {
+    _$gameAtom.reportRead();
+    return super.game;
   }
 
   @override
-  set gameId(String value) {
-    _$gameIdAtom.reportWrite(value, super.gameId, () {
-      super.gameId = value;
+  set game(Game? value) {
+    _$gameAtom.reportWrite(value, super.game, () {
+      super.game = value;
     });
   }
 
@@ -55,26 +55,31 @@ mixin _$GameStore on _GameStore, Store {
     });
   }
 
+  late final _$joinGameAsyncAction =
+      AsyncAction('_GameStore.joinGame', context: context);
+
+  @override
+  Future joinGame(String gameId) {
+    return _$joinGameAsyncAction.run(() => super.joinGame(gameId));
+  }
+
+  late final _$createGameAsyncAction =
+      AsyncAction('_GameStore.createGame', context: context);
+
+  @override
+  Future createGame() {
+    return _$createGameAsyncAction.run(() => super.createGame());
+  }
+
   late final _$_GameStoreActionController =
       ActionController(name: '_GameStore', context: context);
 
   @override
-  void setGameId(String value) {
+  void setGame(Game game) {
     final _$actionInfo =
-        _$_GameStoreActionController.startAction(name: '_GameStore.setGameId');
+        _$_GameStoreActionController.startAction(name: '_GameStore.setGame');
     try {
-      return super.setGameId(value);
-    } finally {
-      _$_GameStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void validateGameId(String value) {
-    final _$actionInfo = _$_GameStoreActionController.startAction(
-        name: '_GameStore.validateGameId');
-    try {
-      return super.validateGameId(value);
+      return super.setGame(game);
     } finally {
       _$_GameStoreActionController.endAction(_$actionInfo);
     }
@@ -83,34 +88,9 @@ mixin _$GameStore on _GameStore, Store {
   @override
   String toString() {
     return '''
-gameId: ${gameId},
+game: ${game},
 success: ${success},
 isLoading: ${isLoading}
-    ''';
-  }
-}
-
-mixin _$GameErrorStore on _GameErrorStore, Store {
-  late final _$gameIdErrorAtom =
-      Atom(name: '_GameErrorStore.gameIdError', context: context);
-
-  @override
-  String? get gameIdError {
-    _$gameIdErrorAtom.reportRead();
-    return super.gameIdError;
-  }
-
-  @override
-  set gameIdError(String? value) {
-    _$gameIdErrorAtom.reportWrite(value, super.gameIdError, () {
-      super.gameIdError = value;
-    });
-  }
-
-  @override
-  String toString() {
-    return '''
-gameIdError: ${gameIdError}
     ''';
   }
 }

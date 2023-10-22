@@ -8,17 +8,21 @@ class AppButton extends StatelessWidget {
   final ButtonType type;
   final VoidCallback onPressed;
   final String text;
+  final FocusNode? focusNode;
 
-  const AppButton(
-      {super.key,
-      required this.type,
-      required this.onPressed,
-      required this.text});
+  const AppButton({
+    Key? key,
+    required this.type,
+    required this.onPressed,
+    required this.text,
+    this.focusNode,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onPressed,
+      focusNode: focusNode,
       child: Container(
         width: double.infinity,
         height: ScreenUtil().setHeight(48.0),

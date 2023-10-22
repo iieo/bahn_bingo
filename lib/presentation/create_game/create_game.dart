@@ -8,7 +8,6 @@ import 'package:boilerplate/core/widgets/input_widget.dart';
 import 'package:boilerplate/core/widgets/progress_indicator_widget.dart';
 import 'package:boilerplate/data/sharedpref/constants/preferences.dart';
 import 'package:boilerplate/presentation/home/store/theme/theme_store.dart';
-import 'package:boilerplate/presentation/login/store/login_store.dart';
 import 'package:boilerplate/utils/device/device_utils.dart';
 import 'package:boilerplate/utils/locale/app_localization.dart';
 import 'package:boilerplate/utils/routes/routes.dart';
@@ -19,15 +18,28 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../di/service_locator.dart';
 
-class LoginScreen extends StatefulWidget {
+class CreateGameScreen extends StatefulWidget {
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  _CreateGameScreenState createState() => _CreateGameScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _CreateGameScreenState extends State<CreateGameScreen> {
   //stores:---------------------------------------------------------------------
   final ThemeStore _themeStore = getIt<ThemeStore>();
   final GameStore _gameStore = getIt<GameStore>();
+  final FormStore _formStore = getIt<FormStore>();
+
+  //text controllers:-----------------------------------------------------------
+  final TextEditingController _gameIdController = TextEditingController();
+
+  //focus node:-----------------------------------------------------------------
+  late FocusNode _joinButtonFocusNode;
+
+  @override
+  void initState() {
+    super.initState();
+    _joinButtonFocusNode = FocusNode();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -91,7 +103,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     const SizedBox(
                       height: Dimens.vertical_padding,
                     ),
-                    _buildLoginUI(),
+                    _buildInputUI(),
                   ],
                 ),
               )
@@ -118,7 +130,7 @@ class _LoginScreenState extends State<LoginScreen> {
           const SizedBox(
             height: 20.0,
           ),
-          Text(AppLocalizations.of(context).translate('auth_login_title'),
+          Text(AppLocalizations.of(context).translate('start_join_game_title'),
               style: Theme.of(context).textTheme.titleLarge?.apply(
                     color: Colors.white,
                   )),
@@ -127,7 +139,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget _buildLoginUI() {
+  Widget _buildInputUI() {
     return Flexible(
       child: Container(
         width: double.infinity,
@@ -145,69 +157,22 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // Lets make a generic input widget
-            _buildEmailField(),
-            const SizedBox(
-              height: 25.0,
-            ),
-            _buildPasswordField(),
-            Observer(builder: (builder) {
-              return Visibility(
-                  visible: !_userStore.isLogin,
-                  child: Column(children: [
-                    const SizedBox(
-                      height: 25.0,
-                    ),
-                    _buildConfirmPasswordField()
-                  ]));
-            }),
-            const SizedBox(
-              height: 15.0,
-            ),
-            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-              TextButton(
-                  onPressed: () => _userStore.setIsLogin(!_userStore.isLogin),
-                  child: Text(
-                    _userStore.isLogin
-                        ? AppLocalizations.of(context)
-                            .translate('auth_register_now')
-                        : AppLocalizations.of(context)
-                            .translate('auth_login_now'),
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.primary,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  )),
-              TextButton(
-                  onPressed: () => {},
-                  child: Text(
-                    AppLocalizations.of(context)
-                        .translate('auth_forgot_password'),
-                    textAlign: TextAlign.right,
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.primary,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ))
-            ]),
+            _buildGameIdInputField(),
             const SizedBox(
               height: 20.0,
             ),
             Observer(
                 builder: ((context) => AppButton(
+                      focusNode: _joinButtonFocusNode,
                       type: ButtonType.PRIMARY,
-                      text: _userStore.isLogin
-                          ? AppLocalizations.of(context).translate('auth_login')
-                          : AppLocalizations.of(context)
-                              .translate('auth_register'),
+                      text: AppLocalizations.of(context).translate('join_game'),
                       onPressed: () async {
-                        if (_formStore.canLogin) {
+                        if (_formStore.canJoin) {
                           DeviceUtils.hideKeyboard(context);
-                          _userStore.login(_userEmailController.text,
-                              _passwordController.text);
+                          _gameStore.joinGame(_gameIdController.text);
                         } else {
                           _showErrorMessage(AppLocalizations.of(context)
-                              .translate('auth_fill_all_fields'));
+                              .translate('join_game_error'));
                         }
                       },
                     )))
@@ -217,66 +182,30 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget _buildPasswordField() {
-    return Observer(builder: (context) {
-      return InputWidget(
-        isObscure: true,
-        icon: Icons.lock,
-        textController: _passwordController,
-        focusNode: _passwordFocusNode,
-        errorText: _formStore.formErrorStore.password,
-        onChanged: (value) {
-          _formStore.setPassword(_passwordController.text);
-        },
-        topLabel: AppLocalizations.of(context).translate('password'),
-        hintText:
-            AppLocalizations.of(context).translate('auth_login_enter_password'),
-      );
-    });
-  }
-
-  Widget _buildConfirmPasswordField() {
-    return Observer(builder: (context) {
-      return InputWidget(
-        isObscure: true,
-        icon: Icons.lock,
-        textController: _confirmPasswordController,
-        focusNode: _confirmPasswordFocusNode,
-        errorText: _formStore.formErrorStore.confirmPassword,
-        onChanged: (value) {
-          _formStore.setConfirmPassword(_confirmPasswordController.text);
-        },
-        topLabel: AppLocalizations.of(context).translate('password'),
-        hintText:
-            AppLocalizations.of(context).translate('auth_login_enter_password'),
-      );
-    });
-  }
-
-  Widget _buildEmailField() {
+  Widget _buildGameIdInputField() {
     return Observer(builder: (context) {
       return InputWidget(
         inputType: TextInputType.emailAddress,
         icon: Icons.person,
-        textController: _userEmailController,
+        textController: _gameIdController,
         inputAction: TextInputAction.next,
         autoFocus: false,
         onChanged: (value) {
-          _formStore.setUserId(_userEmailController.text);
+          _formStore.setGameId(_gameIdController.text);
         },
         onFieldSubmitted: (value) {
-          FocusScope.of(context).requestFocus(_passwordFocusNode);
+          FocusScope.of(context).requestFocus(_joinButtonFocusNode);
         },
-        errorText: _formStore.formErrorStore.userEmail,
-        topLabel: AppLocalizations.of(context).translate('auth_email'),
-        hintText: AppLocalizations.of(context).translate('auth_enter_email'),
+        errorText: _gameStore.gameErrorStore.gameIdError,
+        topLabel: AppLocalizations.of(context).translate('game_id'),
+        hintText: AppLocalizations.of(context).translate('enter_game_id'),
       );
     });
   }
 
   Widget navigate(BuildContext context) {
     SharedPreferences.getInstance().then((prefs) {
-      prefs.setBool(Preferences.game_id, true);
+      prefs.setString(Preferences.game_id, _gameIdController.text);
     });
 
     Future.delayed(Duration(milliseconds: 0), () {
@@ -315,9 +244,8 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void dispose() {
     // Clean up the controller when the Widget is removed from the Widget tree
-    _userEmailController.dispose();
-    _passwordController.dispose();
-    _passwordFocusNode.dispose();
+    _joinButtonFocusNode.dispose();
+    _gameIdController.dispose();
     super.dispose();
   }
 }

@@ -1,11 +1,11 @@
 import 'dart:async';
 
-import 'package:boilerplate/domain/usecase/user/login_usecase.dart';
+import 'package:boilerplate/domain/entity/game/game.dart';
 
 abstract class GameRepository {
-  Future<String> createGame(LoginParams params);
+  Future<Game?> createGame();
 
-  Future<void> joinGame(String gameId);
+  Future<Game?> joinGame(String gameId);
 
   Future<String?> get gameId;
 
