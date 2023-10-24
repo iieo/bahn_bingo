@@ -1,6 +1,18 @@
 # Ignore assets folder
 /assets/images/
 
+# Firebase
+.firebase/
+.firestore-rules/
+.firestore-indexes/
+*.gcx
+*.gcx.crc
+firebase-debug.log
+firestore-debug.log
+database-debug.log
+ui-debug.log
+*.json
+
 # Miscellaneous
 *.class
 *.lock
