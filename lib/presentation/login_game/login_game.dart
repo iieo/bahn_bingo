@@ -7,7 +7,6 @@ import 'package:boilerplate/core/widgets/empty_app_bar_widget.dart';
 import 'package:boilerplate/core/widgets/input_widget.dart';
 import 'package:boilerplate/core/widgets/progress_indicator_widget.dart';
 import 'package:boilerplate/data/sharedpref/constants/preferences.dart';
-import 'package:boilerplate/presentation/home/store/theme/theme_store.dart';
 import 'package:boilerplate/utils/device/device_utils.dart';
 import 'package:boilerplate/utils/locale/app_localization.dart';
 import 'package:boilerplate/utils/routes/routes.dart';
@@ -18,14 +17,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../di/service_locator.dart';
 
-class CreateGameScreen extends StatefulWidget {
+class LoginGameScreen extends StatefulWidget {
   @override
-  _CreateGameScreenState createState() => _CreateGameScreenState();
+  _LoginGameScreenState createState() => _LoginGameScreenState();
 }
 
-class _CreateGameScreenState extends State<CreateGameScreen> {
+class _LoginGameScreenState extends State<LoginGameScreen> {
   //stores:---------------------------------------------------------------------
-  final ThemeStore _themeStore = getIt<ThemeStore>();
   final GameStore _gameStore = getIt<GameStore>();
   final FormStore _formStore = getIt<FormStore>();
 
@@ -44,36 +42,28 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      primary: true,
-      appBar: EmptyAppBar(),
-      body: _buildBody(),
-    );
-  }
-
-  // body methods:--------------------------------------------------------------
-  Widget _buildBody() {
-    return Material(
-      child: Stack(
-        children: <Widget>[
-          _buildContent(),
-          Observer(
-            builder: (context) {
-              return _gameStore.success
-                  ? navigate(context)
-                  : _showErrorMessage(_gameStore.errorStore.errorMessage);
-            },
-          ),
-          Observer(
-            builder: (context) {
-              return Visibility(
-                visible: _gameStore.isLoading,
-                child: CustomProgressIndicatorWidget(),
-              );
-            },
-          )
-        ],
-      ),
-    );
+        primary: true,
+        appBar: EmptyAppBar(),
+        body: Stack(
+          children: <Widget>[
+            _buildContent(),
+            Observer(
+              builder: (context) {
+                return _gameStore.game != null
+                    ? navigate(context)
+                    : _showErrorMessage(_formStore.errorStore.errorMessage);
+              },
+            ),
+            Observer(
+              builder: (context) {
+                return Visibility(
+                  visible: _gameStore.isLoading,
+                  child: CustomProgressIndicatorWidget(),
+                );
+              },
+            )
+          ],
+        ));
   }
 
   Widget _buildContent() {

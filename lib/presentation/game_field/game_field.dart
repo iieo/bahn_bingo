@@ -1,7 +1,7 @@
 import 'package:boilerplate/core/stores/game/game_store.dart';
 import 'package:boilerplate/di/service_locator.dart';
 import 'package:boilerplate/domain/entity/game/game.dart';
-import 'package:boilerplate/presentation/home/store/theme/theme_store.dart';
+import 'package:boilerplate/presentation/game_field/store/theme/theme_store.dart';
 import 'package:boilerplate/utils/locale/app_localization.dart';
 import 'package:flutter/material.dart';
 
@@ -19,6 +19,7 @@ class _GameFieldScreenState extends State<GameFieldScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      primary: true,
       appBar: AppBar(
         title: Text(AppLocalizations.of(context).translate('game_id_title') +
             " " +

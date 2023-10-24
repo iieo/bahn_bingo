@@ -7,6 +7,8 @@ abstract class GameRepository {
 
   Future<Game?> joinGame(String gameId);
 
+  Future<Game?> loadActiveGame();
+
   Future<String?> get gameId;
 
   Future<bool> saveGameId(String gameId);

@@ -17,14 +17,27 @@ class GameRepositoryImpl extends GameRepository {
   @override
   Future<Game?> createGame() async {
     String gameId = Random().nextInt(10000).toString();
-    return await Future.delayed(
-        Duration(seconds: 2), () => new Game(id: gameId));
+    Game? game =
+        await Future.delayed(Duration(seconds: 2), () => new Game(id: gameId));
+    if (game != null) {
+      _sharedPrefsHelper.saveGameId(game.id);
+    }
+    return game;
   }
 
   @override
   Future<Game?> joinGame(String gameId) async {
-    return await Future.delayed(
-        Duration(seconds: 2), () => new Game(id: gameId));
+    Game? game =
+        await Future.delayed(Duration(seconds: 2), () => new Game(id: gameId));
+    if (game != null) {
+      _sharedPrefsHelper.saveGameId(game.id);
+    }
+    return game;
+  }
+
+  Future<Game?> loadActiveGame() {
+    return _sharedPrefsHelper.gameId
+        .then((value) => value != null ? new Game(id: value) : null);
   }
 
   @override

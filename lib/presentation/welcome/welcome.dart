@@ -7,6 +7,8 @@ import 'package:boilerplate/utils/routes/routes.dart';
 import 'package:flutter/material.dart';
 
 class WelcomeScreen extends StatelessWidget {
+  final GameStore _gameStore = getIt<GameStore>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -84,9 +86,7 @@ class WelcomeScreen extends StatelessWidget {
                 AppButton(
                   text: AppLocalizations.of(context).translate('create_game'),
                   type: ButtonType.PRIMARY,
-                  onPressed: () {
-                    navigateCreateGame(context);
-                  },
+                  onPressed: _gameStore.createGame,
                 )
               ],
             ),
@@ -100,13 +100,6 @@ class WelcomeScreen extends StatelessWidget {
     Future.delayed(Duration(milliseconds: 0), () {
       Navigator.of(context).pushNamedAndRemoveUntil(
           Routes.joinGame, (Route<dynamic> route) => false);
-    });
-  }
-
-  void navigateCreateGame(BuildContext context) {
-    Future.delayed(Duration(milliseconds: 0), () {
-      Navigator.of(context).pushNamedAndRemoveUntil(
-          Routes.createGame, (Route<dynamic> route) => false);
     });
   }
 }

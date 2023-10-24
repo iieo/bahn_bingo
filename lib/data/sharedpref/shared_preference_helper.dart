@@ -38,15 +38,6 @@ class SharedPreferenceHelper {
     return _sharedPreference.remove(Preferences.game_id);
   }
 
-  // Login:---------------------------------------------------------------------
-  Future<bool> get isLoggedIn async {
-    return _sharedPreference.getBool(Preferences.is_logged_in) ?? false;
-  }
-
-  Future<bool> saveIsLoggedIn(bool value) async {
-    return _sharedPreference.setBool(Preferences.is_logged_in, value);
-  }
-
   // Theme:------------------------------------------------------
   bool get isDarkMode {
     return _sharedPreference.getBool(Preferences.is_dark_mode) ?? false;

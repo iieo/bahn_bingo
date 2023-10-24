@@ -4,21 +4,42 @@ import 'package:boilerplate/domain/entity/game/game.dart';
 import 'package:boilerplate/domain/usecase/game/create_game_usecase.dart';
 import 'package:boilerplate/domain/usecase/game/get_game_usecase.dart';
 import 'package:boilerplate/domain/usecase/game/join_game_usecase.dart';
+import 'package:boilerplate/domain/usecase/game/load_game_usecase.dart';
 import 'package:mobx/mobx.dart';
 part 'game_store.g.dart';
 
 class GameStore = _GameStore with _$GameStore;
 
 abstract class _GameStore with Store {
-  _GameStore(this._getGameUseCase, this._joinGameUseCase,
-      this._createGameUseCase, this.gameErrorStore, this.errorStore) {
+  _GameStore(
+      this._getGameUseCase,
+      this._joinGameUseCase,
+      this._createGameUseCase,
+      this._loadGameUseCase,
+      this.gameErrorStore,
+      this.errorStore) {
     _setupDisposers();
+    _loadActiveGame();
+  }
+
+  Future<void> _loadActiveGame() async {
+    try {
+      isLoading = true;
+      game = await _loadGameUseCase.call(params: null);
+      print(game);
+      success = game != null;
+    } catch (e) {
+      errorStore.errorMessage = "error_load_game";
+    } finally {
+      isLoading = false;
+    }
   }
 
   // use cases:-----------------------------------------------------------------
   final CreateGameUseCase _createGameUseCase;
   final JoinGameUseCase _joinGameUseCase;
   final GetGameUseCase _getGameUseCase;
+  final LoadGameUseCase _loadGameUseCase;
 
   // stores:--------------------------------------------------------------------
   final GameErrorStore gameErrorStore;
@@ -48,7 +69,8 @@ abstract class _GameStore with Store {
   Future<void> joinGame(String gameId) async {
     try {
       isLoading = true;
-      success = await _joinGameUseCase.call(params: gameId) != null;
+      game = await _joinGameUseCase.call(params: gameId);
+      success = game != null;
     } catch (e) {
       errorStore.errorMessage = "error_join_game";
     } finally {
@@ -60,7 +82,8 @@ abstract class _GameStore with Store {
   Future<void> createGame() async {
     try {
       isLoading = true;
-      success = await _createGameUseCase.call(params: null) != null;
+      game = await _createGameUseCase.call(params: null);
+      success = game != null;
     } catch (e) {
       errorStore.errorMessage = "error_create_game";
     } finally {

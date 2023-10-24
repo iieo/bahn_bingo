@@ -5,6 +5,7 @@ import 'package:boilerplate/domain/repository/game/game_repository.dart';
 import 'package:boilerplate/domain/usecase/game/create_game_usecase.dart';
 import 'package:boilerplate/domain/usecase/game/get_game_usecase.dart';
 import 'package:boilerplate/domain/usecase/game/join_game_usecase.dart';
+import 'package:boilerplate/domain/usecase/game/load_game_usecase.dart';
 import 'package:boilerplate/domain/usecase/post/delete_post_usecase.dart';
 import 'package:boilerplate/domain/usecase/post/find_post_by_id_usecase.dart';
 import 'package:boilerplate/domain/usecase/post/get_post_usecase.dart';
@@ -27,6 +28,10 @@ mixin UseCaseModule {
 
     getIt.registerSingleton<CreateGameUseCase>(
       CreateGameUseCase(getIt<GameRepository>()),
+    );
+
+    getIt.registerSingleton<LoadGameUseCase>(
+      LoadGameUseCase(getIt<GameRepository>()),
     );
 
     // post:--------------------------------------------------------------------

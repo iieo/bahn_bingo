@@ -7,11 +7,10 @@ import 'package:boilerplate/domain/repository/setting/setting_repository.dart';
 import 'package:boilerplate/domain/usecase/game/create_game_usecase.dart';
 import 'package:boilerplate/domain/usecase/game/get_game_usecase.dart';
 import 'package:boilerplate/domain/usecase/game/join_game_usecase.dart';
+import 'package:boilerplate/domain/usecase/game/load_game_usecase.dart';
 import 'package:boilerplate/domain/usecase/post/get_post_usecase.dart';
-import 'package:boilerplate/presentation/home/store/language/language_store.dart';
-import 'package:boilerplate/presentation/home/store/theme/theme_store.dart';
-import 'package:boilerplate/presentation/post/store/post_store.dart';
-
+import 'package:boilerplate/presentation/game_field/store/language/language_store.dart';
+import 'package:boilerplate/presentation/game_field/store/theme/theme_store.dart';
 import '../../../di/service_locator.dart';
 
 mixin StoreModule {
@@ -30,14 +29,8 @@ mixin StoreModule {
         getIt<GetGameUseCase>(),
         getIt<JoinGameUseCase>(),
         getIt<CreateGameUseCase>(),
+        getIt<LoadGameUseCase>(),
         getIt<GameErrorStore>(),
-        getIt<ErrorStore>(),
-      ),
-    );
-
-    getIt.registerSingleton<PostStore>(
-      PostStore(
-        getIt<GetPostUseCase>(),
         getIt<ErrorStore>(),
       ),
     );

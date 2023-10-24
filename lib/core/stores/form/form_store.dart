@@ -14,6 +14,7 @@ abstract class _FormStore with Store {
 
   _FormStore(this.gameErrorStore, this.errorStore) {
     _setupValidations();
+    gameErrorStore.gameIdError = "error_gameid_empty";
   }
 
   // disposers:-----------------------------------------------------------------
