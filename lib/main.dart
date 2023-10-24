@@ -9,11 +9,11 @@ import 'firebase_options.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await setPreferredOrientations();
-  await ServiceLocator.configureDependencies();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await setPreferredOrientations();
+  await ServiceLocator.configureDependencies();
   runApp(MyApp());
 }
 

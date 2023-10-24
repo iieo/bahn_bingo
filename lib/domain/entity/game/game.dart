@@ -2,19 +2,23 @@ class Game {
   final String id;
   int fieldSize;
   List<EventItem> events;
-  Game({required this.id})
-      : events = [
-          EventItem(task: '1'),
-          EventItem(task: '2', done: true),
-          EventItem(task: '3'),
-          EventItem(task: '4'),
-          EventItem(task: '5'),
-          EventItem(task: '6'),
-          EventItem(task: '7'),
-          EventItem(task: '8'),
-          EventItem(task: '9')
-        ],
-        fieldSize = 3;
+  Game({required this.id, this.fieldSize = 3, this.events = const []});
+
+  factory Game.fromJson(String id, Map<String, dynamic> json) {
+    List<EventItem> events = [];
+    for (var event in json['events']) {
+      events.add(EventItem(task: event['task'], done: event['done']));
+    }
+    return Game(id: id, fieldSize: json['fieldSize'], events: events);
+  }
+
+  Map<String, dynamic> toJson() {
+    List<Map<String, dynamic>> eventsJson = [];
+    for (var event in events) {
+      eventsJson.add({'task': event.task, 'done': event.done});
+    }
+    return {'id': id, 'fieldSize': fieldSize, 'events': eventsJson};
+  }
 }
 
 class EventItem {
