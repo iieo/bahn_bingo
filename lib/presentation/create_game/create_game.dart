@@ -171,8 +171,8 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                           DeviceUtils.hideKeyboard(context);
                           _gameStore.joinGame(_gameIdController.text);
                         } else {
-                          _showErrorMessage(AppLocalizations.of(context)
-                              .translate('join_game_error'));
+                          _showErrorMessage("Error: " +
+                              _formStore.gameErrorStore.gameIdError!);
                         }
                       },
                     )))

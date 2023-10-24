@@ -59,7 +59,7 @@ mixin _$GameStore on _GameStore, Store {
       AsyncAction('_GameStore.joinGame', context: context);
 
   @override
-  Future joinGame(String gameId) {
+  Future<void> joinGame(String gameId) {
     return _$joinGameAsyncAction.run(() => super.joinGame(gameId));
   }
 
@@ -67,7 +67,7 @@ mixin _$GameStore on _GameStore, Store {
       AsyncAction('_GameStore.createGame', context: context);
 
   @override
-  Future createGame() {
+  Future<void> createGame() {
     return _$createGameAsyncAction.run(() => super.createGame());
   }
 

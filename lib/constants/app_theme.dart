@@ -14,6 +14,9 @@
 /// #114488 or #D39090 as primary colours in your setting, then you would have
 /// `const Color(0x114488)` and `const Color(0xD39090)`, respectively.
 ///
+/// BAHN COLOR: 0xFFfa1c28
+///
+///
 /// Usage:
 /// In order to use this newly created setting or even the colours in it, you would just
 /// `import` this file in your project, anywhere you needed it.
@@ -22,8 +25,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppThemeData {
-  static const _lightFillColor = Colors.black;
-  static const _darkFillColor = Colors.white;
+  static const _lightFillColor = Color(0x333);
+  static const _darkFillColor = Color(0xfff);
 
   static final Color _lightFocusColor = Colors.black.withOpacity(0.12);
   static final Color _darkFocusColor = Colors.white.withOpacity(0.12);
@@ -59,24 +62,29 @@ class AppThemeData {
     );
   }
 
-  static const ColorScheme lightColorScheme = ColorScheme(
-    primary: Color.fromRGBO(86, 215, 188, 1),
-    primaryContainer: Color.fromRGBO(86, 215, 188, 1),
-    secondary: Color.fromRGBO(245, 247, 249, 1),
-    secondaryContainer: Color.fromRGBO(245, 247, 249, 1),
-    background: Color.fromRGBO(245, 247, 249, 1),
-    surface: Color.fromRGBO(245, 247, 249, 1),
-    onBackground: Colors.white,
-    error: _lightFillColor,
-    onError: _lightFillColor,
-    onPrimary: _lightFillColor,
-    onSecondary: Color(0xFF322942),
-    onSurface: Color(0xFF241E30),
+  static const _black = Color(0xff333333);
+  static const _strongWhite = Color(0xffffffff);
+  static const _white = Color(0xfffafafa);
+
+  static ColorScheme lightColorScheme = ColorScheme(
+    primary: Color(0xFFfa1c28),
+    onPrimary: _white,
+    primaryContainer: _strongWhite,
+    secondaryContainer: Color(0xffeeeeee),
+    secondary: Color(0xff1338BE),
+    onSecondary: _white,
+    background: _white,
+    surface: _white,
+    onSurface: _black,
+    onBackground: _black,
+    // White with 0.05 opacity
+    error: _darkFillColor,
+    onError: _darkFillColor,
     brightness: Brightness.light,
   );
 
   static const ColorScheme darkColorScheme = ColorScheme(
-    primary: Color(0xFFFF8383),
+    primary: Color.fromARGB(255, 22, 23, 90),
     primaryContainer: Color(0xFF1CDEC9),
     secondary: Color(0xFF4D1F7C),
     secondaryContainer: Color(0xFF451B6F),
@@ -98,7 +106,8 @@ class AppThemeData {
   static const _bold = FontWeight.w700;
 
   static final TextTheme _textTheme = TextTheme(
-    headlineLarge: GoogleFonts.montserrat(fontWeight: _bold, fontSize: 28.0),
+    headlineLarge: GoogleFonts.montserrat(
+        fontWeight: _bold, fontSize: 28.0, color: _strongWhite),
     headlineMedium: GoogleFonts.montserrat(fontWeight: _bold, fontSize: 20.0),
     headlineSmall: GoogleFonts.oswald(fontWeight: _medium, fontSize: 16.0),
     bodyLarge: GoogleFonts.montserrat(fontWeight: _regular, fontSize: 14.0),

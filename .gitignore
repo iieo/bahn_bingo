@@ -1,3 +1,6 @@
+# Ignore assets folder
+/assets/
+
 # Miscellaneous
 *.class
 *.lock

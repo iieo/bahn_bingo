@@ -63,6 +63,7 @@ dependencies:
   xxtea: ^2.1.0
   ionicons: ^0.2.2
   flutter_screenutil: ^5.9.0
+  material_color_utilities: ^0.5.0
   # Y
   # Z
 

@@ -5,8 +5,6 @@ import 'package:boilerplate/domain/usecase/game/create_game_usecase.dart';
 import 'package:boilerplate/domain/usecase/game/get_game_usecase.dart';
 import 'package:boilerplate/domain/usecase/game/join_game_usecase.dart';
 import 'package:mobx/mobx.dart';
-import 'package:validators/validators.dart';
-
 part 'game_store.g.dart';
 
 class GameStore = _GameStore with _$GameStore;
@@ -47,7 +45,7 @@ abstract class _GameStore with Store {
   }
 
   @action
-  void joinGame(String gameId) async {
+  Future<void> joinGame(String gameId) async {
     try {
       isLoading = true;
       success = await _joinGameUseCase.call(params: gameId) != null;
@@ -59,7 +57,7 @@ abstract class _GameStore with Store {
   }
 
   @action
-  void createGame() async {
+  Future<void> createGame() async {
     try {
       isLoading = true;
       success = await _createGameUseCase.call(params: null) != null;

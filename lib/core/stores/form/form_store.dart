@@ -33,7 +33,7 @@ abstract class _FormStore with Store {
   bool success = false;
 
   @computed
-  bool get canJoin => gameErrorStore.gameIdError == null && gameId.length == 4;
+  bool get canJoin => gameErrorStore.gameIdError == null;
 
   // actions:-------------------------------------------------------------------
   @action
@@ -45,8 +45,8 @@ abstract class _FormStore with Store {
   void validateGameId(String value) {
     if (value.isEmpty) {
       gameErrorStore.gameIdError = "error_gameid_empty";
-    } else if (!isEmail(value)) {
-      gameErrorStore.gameIdError = 'error_gameid_length';
+    } else if (value.length != 4) {
+      gameErrorStore.gameIdError = "error_gameid_length";
     } else {
       gameErrorStore.gameIdError = null;
     }

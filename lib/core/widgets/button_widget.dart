@@ -27,7 +27,9 @@ class AppButton extends StatelessWidget {
         width: double.infinity,
         height: ScreenUtil().setHeight(48.0),
         decoration: BoxDecoration(
-          color: getButtonColor(context, type),
+          color: type == ButtonType.PLAIN
+              ? Colors.white
+              : Theme.of(context).colorScheme.primary,
           borderRadius: BorderRadius.circular(8.0),
           boxShadow: const [
             BoxShadow(
@@ -39,38 +41,15 @@ class AppButton extends StatelessWidget {
           ],
         ),
         child: Center(
-          child: Text(
-            text,
-            style: GoogleFonts.roboto(
-              color: getTextColor(context, type),
-              fontSize: 16.0,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
+          child: Text(text,
+              style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                    color: type == ButtonType.PLAIN
+                        ? Theme.of(context).colorScheme.primary
+                        : Colors.white,
+                    fontWeight: FontWeight.w600,
+                  )),
         ),
       ),
     );
-  }
-}
-
-Color getButtonColor(BuildContext context, ButtonType type) {
-  switch (type) {
-    case ButtonType.PRIMARY:
-      return Theme.of(context).colorScheme.primary;
-    case ButtonType.PLAIN:
-      return Colors.white;
-    default:
-      return Theme.of(context).colorScheme.primary;
-  }
-}
-
-Color getTextColor(BuildContext context, ButtonType type) {
-  switch (type) {
-    case ButtonType.PLAIN:
-      return Theme.of(context).colorScheme.primary;
-    case ButtonType.PRIMARY:
-      return Colors.white;
-    default:
-      return Colors.white;
   }
 }
