@@ -15,12 +15,14 @@ class InputWidget extends StatelessWidget {
   final TextInputAction? inputAction;
   final TextInputType? inputType;
   final String? errorText;
+  final int? maxLength;
 
   const InputWidget({
     super.key,
     this.hintText,
     this.inputType,
     this.icon,
+    this.maxLength,
     this.errorText,
     this.height = 48.0,
     this.topLabel = "",
@@ -51,6 +53,7 @@ class InputWidget extends StatelessWidget {
             focusNode: focusNode,
             onFieldSubmitted: onFieldSubmitted,
             onChanged: onChanged,
+            maxLength: maxLength,
             autofocus: autoFocus,
             textInputAction: inputAction,
             obscureText: isObscure,

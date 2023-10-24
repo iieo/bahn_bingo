@@ -130,25 +130,36 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
   Widget _buildInputUI() {
     return Flexible(
       child: Container(
-        width: double.infinity,
         constraints: BoxConstraints(
           minHeight: MediaQuery.of(context).size.height - 180.0,
         ),
-        decoration: const BoxDecoration(
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(30.0),
-            topRight: Radius.circular(30.0),
-          ),
-          color: Colors.white,
-        ),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(30.0),
+              topRight: Radius.circular(30.0),
+            ),
+            color: Theme.of(context).colorScheme.background),
         padding: const EdgeInsets.all(24.0),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            _buildGameIdInputField(),
-            const SizedBox(
-              height: 20.0,
-            ),
+            Expanded(
+                child: Container(
+                    child: Column(
+              children: [
+                _buildAmountSlider(),
+                const SizedBox(
+                  height: 20,
+                ),
+                _buildGameEventInputField(),
+                const SizedBox(
+                  height: 20,
+                ),
+                _buildAddEventButton(),
+                _buildEventList(),
+              ],
+            ))),
             Observer(
                 builder: ((context) => AppButton(
                       focusNode: _createButtonFocusNode,
@@ -158,10 +169,11 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                       onPressed: () async {
                         if (_eventsStore.canCreateGame) {
                           DeviceUtils.hideKeyboard(context);
-                          _gameStore.joinGame(_gameEventController.text);
+                          _gameStore.createGame(_eventsStore.events);
                         } else {
                           _showErrorMessage("Error: " +
-                              _eventsStore.gameErrorStore.gameError!);
+                              AppLocalizations.of(context)
+                                  .translate('create_game_error_event_length'));
                         }
                       },
                     )))
@@ -171,7 +183,69 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
     );
   }
 
-  Widget _buildGameIdInputField() {
+  Widget _buildEventList() {
+    return Observer(builder: (context) {
+      return Expanded(
+          child: ListView.separated(
+              separatorBuilder: (context, index) => Divider(),
+              itemCount: _eventsStore.events.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title: Text(_eventsStore.events[index]),
+                  trailing: IconButton(
+                    icon: Icon(Icons.delete),
+                    onPressed: () {
+                      _eventsStore.removeEvent(index);
+                    },
+                  ),
+                );
+              }));
+    });
+  }
+
+  Widget _buildAddEventButton() {
+    return AppButton(
+        type: ButtonType.PLAIN,
+        onPressed: () async {
+          if (_eventsStore.canAddEvent) {
+            DeviceUtils.hideKeyboard(context);
+            _eventsStore.addEvent(_gameEventController.text);
+            _gameEventController.clear();
+          } else {
+            _showErrorMessage(
+                "Error: " + _eventsStore.gameErrorStore.gameError!);
+          }
+        },
+        text: AppLocalizations.of(context).translate('add_event'));
+  }
+
+  Widget _buildAmountSlider() {
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      Text(
+        AppLocalizations.of(context).translate('field_size') +
+            ": " +
+            _eventsStore.fieldSize.toString(),
+        textAlign: TextAlign.left,
+        style: Theme.of(context).textTheme.bodyMedium,
+      ),
+      Observer(builder: (context) {
+        return Slider(
+          value: _eventsStore.fieldSize.toDouble(),
+          min: 3,
+          max: 5,
+          divisions: 2,
+          label: AppLocalizations.of(context).translate('field_size') +
+              ": " +
+              _eventsStore.fieldSize.toString(),
+          onChanged: (double value) {
+            _eventsStore.setFieldSize(value.toInt());
+          },
+        );
+      })
+    ]);
+  }
+
+  Widget _buildGameEventInputField() {
     return Observer(builder: (context) {
       return InputWidget(
         inputType: TextInputType.emailAddress,

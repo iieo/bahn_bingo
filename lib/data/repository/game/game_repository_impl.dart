@@ -15,7 +15,7 @@ class GameRepositoryImpl extends GameRepository {
   // Game:---------------------------------------------------------------------
 
   @override
-  Future<Game?> createGame() async {
+  Future<Game?> createGame(List<String> events) async {
     String gameId = Random().nextInt(10000).toString();
     Game? game =
         await Future.delayed(Duration(seconds: 2), () => new Game(id: gameId));

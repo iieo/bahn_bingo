@@ -9,6 +9,13 @@ part of 'create_game_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$CreateGameStore on _CreateGameStore, Store {
+  Computed<bool>? _$canAddEventComputed;
+
+  @override
+  bool get canAddEvent =>
+      (_$canAddEventComputed ??= Computed<bool>(() => super.canAddEvent,
+              name: '_CreateGameStore.canAddEvent'))
+          .value;
   Computed<bool>? _$canCreateGameComputed;
 
   @override
@@ -30,6 +37,22 @@ mixin _$CreateGameStore on _CreateGameStore, Store {
   set events(List<String> value) {
     _$eventsAtom.reportWrite(value, super.events, () {
       super.events = value;
+    });
+  }
+
+  late final _$fieldSizeAtom =
+      Atom(name: '_CreateGameStore.fieldSize', context: context);
+
+  @override
+  int get fieldSize {
+    _$fieldSizeAtom.reportRead();
+    return super.fieldSize;
+  }
+
+  @override
+  set fieldSize(int value) {
+    _$fieldSizeAtom.reportWrite(value, super.fieldSize, () {
+      super.fieldSize = value;
     });
   }
 
@@ -86,6 +109,17 @@ mixin _$CreateGameStore on _CreateGameStore, Store {
   }
 
   @override
+  void setFieldSize(int value) {
+    final _$actionInfo = _$_CreateGameStoreActionController.startAction(
+        name: '_CreateGameStore.setFieldSize');
+    try {
+      return super.setFieldSize(value);
+    } finally {
+      _$_CreateGameStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void validateCurrentEvent(String event) {
     final _$actionInfo = _$_CreateGameStoreActionController.startAction(
         name: '_CreateGameStore.validateCurrentEvent');
@@ -100,7 +134,9 @@ mixin _$CreateGameStore on _CreateGameStore, Store {
   String toString() {
     return '''
 events: ${events},
+fieldSize: ${fieldSize},
 currentEvent: ${currentEvent},
+canAddEvent: ${canAddEvent},
 canCreateGame: ${canCreateGame}
     ''';
   }

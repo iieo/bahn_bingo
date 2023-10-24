@@ -133,13 +133,12 @@ class _LoginGameScreenState extends State<LoginGameScreen> {
         constraints: BoxConstraints(
           minHeight: MediaQuery.of(context).size.height - 180.0,
         ),
-        decoration: const BoxDecoration(
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(30.0),
-            topRight: Radius.circular(30.0),
-          ),
-          color: Colors.white,
-        ),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(30.0),
+              topRight: Radius.circular(30.0),
+            ),
+            color: Theme.of(context).colorScheme.background),
         padding: const EdgeInsets.all(24.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -172,6 +171,7 @@ class _LoginGameScreenState extends State<LoginGameScreen> {
   Widget _buildGameIdInputField() {
     return Observer(builder: (context) {
       return InputWidget(
+        maxLength: 4,
         inputType: TextInputType.emailAddress,
         icon: Icons.person,
         textController: _gameIdController,

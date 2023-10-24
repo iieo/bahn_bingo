@@ -1,6 +1,5 @@
 import 'package:boilerplate/core/stores/error/error_store.dart';
 import 'package:boilerplate/core/stores/form/game_error_store.dart';
-import 'package:boilerplate/core/stores/form/join_game_store.dart';
 import 'package:boilerplate/domain/entity/game/game.dart';
 import 'package:boilerplate/domain/usecase/game/create_game_usecase.dart';
 import 'package:boilerplate/domain/usecase/game/exit_game_usecase.dart';
@@ -92,10 +91,10 @@ abstract class _GameStore with Store {
   }
 
   @action
-  Future<void> createGame() async {
+  Future<void> createGame(List<String> events) async {
     try {
       isLoading = true;
-      game = await _createGameUseCase.call(params: null);
+      game = await _createGameUseCase.call(params: events);
       success = game != null;
     } catch (e) {
       errorStore.errorMessage = "error_create_game";

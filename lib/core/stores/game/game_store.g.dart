@@ -67,8 +67,8 @@ mixin _$GameStore on _GameStore, Store {
       AsyncAction('_GameStore.createGame', context: context);
 
   @override
-  Future<void> createGame() {
-    return _$createGameAsyncAction.run(() => super.createGame());
+  Future<void> createGame(List<String> events) {
+    return _$createGameAsyncAction.run(() => super.createGame(events));
   }
 
   late final _$_GameStoreActionController =

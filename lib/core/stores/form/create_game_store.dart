@@ -14,7 +14,15 @@ abstract class _CreateGameStore with Store {
 
   _CreateGameStore(this.gameErrorStore, this.errorStore) {
     _setupValidations();
-    gameErrorStore.gameError = "error_gameid_empty";
+    gameErrorStore.gameError = "error_game_event_empty";
+    events.add("event1");
+    events.add("event2");
+    events.add("event3");
+    events.add("event4");
+    events.add("event5");
+    events.add("event6");
+    events.add("event7");
+    events.add("event8");
   }
 
   // disposers:-----------------------------------------------------------------
@@ -31,10 +39,16 @@ abstract class _CreateGameStore with Store {
   List<String> events = [];
 
   @observable
+  int fieldSize = 3;
+
+  @observable
   String currentEvent = "";
 
   @computed
-  bool get canCreateGame => gameErrorStore.gameError == null;
+  bool get canAddEvent => gameErrorStore.gameError == null;
+
+  @computed
+  bool get canCreateGame => events.length == fieldSize * fieldSize;
 
   // actions:-------------------------------------------------------------------
 
@@ -46,11 +60,18 @@ abstract class _CreateGameStore with Store {
   @action
   void addEvent(String value) {
     events.add(value);
+    currentEvent = "";
+    gameErrorStore.gameError = "";
   }
 
   @action
   void removeEvent(int index) {
     events.removeAt(index);
+  }
+
+  @action
+  void setFieldSize(int value) {
+    fieldSize = value;
   }
 
   @action
