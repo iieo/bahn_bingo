@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:boilerplate/domain/repository/post/post_repository.dart';
 import 'package:boilerplate/domain/repository/game/game_repository.dart';
 import 'package:boilerplate/domain/usecase/game/create_game_usecase.dart';
+import 'package:boilerplate/domain/usecase/game/exit_game_usecase.dart';
 import 'package:boilerplate/domain/usecase/game/get_game_usecase.dart';
 import 'package:boilerplate/domain/usecase/game/join_game_usecase.dart';
 import 'package:boilerplate/domain/usecase/game/load_game_usecase.dart';
@@ -33,22 +34,8 @@ mixin UseCaseModule {
     getIt.registerSingleton<LoadGameUseCase>(
       LoadGameUseCase(getIt<GameRepository>()),
     );
-
-    // post:--------------------------------------------------------------------
-    getIt.registerSingleton<GetPostUseCase>(
-      GetPostUseCase(getIt<PostRepository>()),
-    );
-    getIt.registerSingleton<FindPostByIdUseCase>(
-      FindPostByIdUseCase(getIt<PostRepository>()),
-    );
-    getIt.registerSingleton<InsertPostUseCase>(
-      InsertPostUseCase(getIt<PostRepository>()),
-    );
-    getIt.registerSingleton<UpdatePostUseCase>(
-      UpdatePostUseCase(getIt<PostRepository>()),
-    );
-    getIt.registerSingleton<DeletePostUseCase>(
-      DeletePostUseCase(getIt<PostRepository>()),
+    getIt.registerSingleton<ExitGameUseCase>(
+      ExitGameUseCase(getIt<GameRepository>()),
     );
   }
 }

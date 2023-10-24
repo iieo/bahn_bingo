@@ -76,9 +76,8 @@ class WelcomeScreen extends StatelessWidget {
                 AppButton(
                   text: AppLocalizations.of(context).translate('join_game'),
                   type: ButtonType.PLAIN,
-                  onPressed: () {
-                    navigateJoinGame(context);
-                  },
+                  onPressed: () =>
+                      Navigator.of(context).pushNamed(Routes.joinGame),
                 ),
                 const SizedBox(
                   height: 15.0,
@@ -86,7 +85,8 @@ class WelcomeScreen extends StatelessWidget {
                 AppButton(
                   text: AppLocalizations.of(context).translate('create_game'),
                   type: ButtonType.PRIMARY,
-                  onPressed: _gameStore.createGame,
+                  onPressed: () =>
+                      Navigator.of(context).pushNamed(Routes.createGame),
                 )
               ],
             ),
@@ -94,12 +94,5 @@ class WelcomeScreen extends StatelessWidget {
         )
       ]),
     );
-  }
-
-  void navigateJoinGame(BuildContext context) {
-    Future.delayed(Duration(milliseconds: 0), () {
-      Navigator.of(context).pushNamedAndRemoveUntil(
-          Routes.joinGame, (Route<dynamic> route) => false);
-    });
   }
 }

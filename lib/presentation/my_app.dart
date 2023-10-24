@@ -1,9 +1,9 @@
 import 'package:boilerplate/constants/app_theme.dart';
 import 'package:boilerplate/constants/strings.dart';
 import 'package:boilerplate/core/stores/game/game_store.dart';
+import 'package:boilerplate/core/stores/language/language_store.dart';
+import 'package:boilerplate/core/stores/theme/theme_store.dart';
 import 'package:boilerplate/presentation/game_field/game_field.dart';
-import 'package:boilerplate/presentation/game_field/store/language/language_store.dart';
-import 'package:boilerplate/presentation/game_field/store/theme/theme_store.dart';
 import 'package:boilerplate/presentation/welcome/welcome.dart';
 import 'package:boilerplate/utils/locale/app_localization.dart';
 import 'package:boilerplate/utils/routes/routes.dart';

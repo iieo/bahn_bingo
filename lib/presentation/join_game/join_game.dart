@@ -1,6 +1,6 @@
 import 'package:another_flushbar/flushbar_helper.dart';
 import 'package:boilerplate/constants/dimens.dart';
-import 'package:boilerplate/core/stores/form/form_store.dart';
+import 'package:boilerplate/core/stores/form/join_game_store.dart';
 import 'package:boilerplate/core/stores/game/game_store.dart';
 import 'package:boilerplate/core/widgets/button_widget.dart';
 import 'package:boilerplate/core/widgets/empty_app_bar_widget.dart';
@@ -25,7 +25,7 @@ class LoginGameScreen extends StatefulWidget {
 class _LoginGameScreenState extends State<LoginGameScreen> {
   //stores:---------------------------------------------------------------------
   final GameStore _gameStore = getIt<GameStore>();
-  final FormStore _formStore = getIt<FormStore>();
+  final JoinGameStore _formStore = getIt<JoinGameStore>();
 
   //text controllers:-----------------------------------------------------------
   final TextEditingController _gameIdController = TextEditingController();
@@ -84,18 +84,16 @@ class _LoginGameScreenState extends State<LoginGameScreen> {
                   ),
                 ),
               ),
-              SingleChildScrollView(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    _buildHeader(),
-                    const SizedBox(
-                      height: Dimens.vertical_padding,
-                    ),
-                    _buildInputUI(),
-                  ],
-                ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  _buildHeader(),
+                  const SizedBox(
+                    height: Dimens.vertical_padding,
+                  ),
+                  _buildInputUI(),
+                ],
               )
             ],
           )),
@@ -132,7 +130,6 @@ class _LoginGameScreenState extends State<LoginGameScreen> {
   Widget _buildInputUI() {
     return Flexible(
       child: Container(
-        width: double.infinity,
         constraints: BoxConstraints(
           minHeight: MediaQuery.of(context).size.height - 180.0,
         ),
@@ -145,27 +142,27 @@ class _LoginGameScreenState extends State<LoginGameScreen> {
         ),
         padding: const EdgeInsets.all(24.0),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             _buildGameIdInputField(),
             const SizedBox(
               height: 20.0,
             ),
-            Observer(
-                builder: ((context) => AppButton(
-                      focusNode: _joinButtonFocusNode,
-                      type: ButtonType.PRIMARY,
-                      text: AppLocalizations.of(context).translate('join_game'),
-                      onPressed: () async {
-                        if (_formStore.canJoin) {
-                          DeviceUtils.hideKeyboard(context);
-                          _gameStore.joinGame(_gameIdController.text);
-                        } else {
-                          _showErrorMessage("Error: " +
-                              _formStore.gameErrorStore.gameIdError!);
-                        }
-                      },
-                    )))
+            AppButton(
+              focusNode: _joinButtonFocusNode,
+              type: ButtonType.PRIMARY,
+              text: AppLocalizations.of(context).translate('join_game'),
+              onPressed: () async {
+                if (_formStore.canJoin) {
+                  DeviceUtils.hideKeyboard(context);
+                  _gameStore.joinGame(_gameIdController.text);
+                } else {
+                  _showErrorMessage(
+                      "Error: " + _formStore.gameErrorStore.gameError!);
+                }
+              },
+            )
           ],
         ),
       ),
@@ -186,7 +183,7 @@ class _LoginGameScreenState extends State<LoginGameScreen> {
         onFieldSubmitted: (value) {
           FocusScope.of(context).requestFocus(_joinButtonFocusNode);
         },
-        errorText: _gameStore.gameErrorStore.gameIdError,
+        errorText: _gameStore.gameErrorStore.gameError,
         topLabel: AppLocalizations.of(context).translate('game_id'),
         hintText: AppLocalizations.of(context).translate('enter_game_id'),
       );

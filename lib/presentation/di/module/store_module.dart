@@ -1,16 +1,18 @@
 import 'dart:async';
 
 import 'package:boilerplate/core/stores/error/error_store.dart';
-import 'package:boilerplate/core/stores/form/form_store.dart';
+import 'package:boilerplate/core/stores/form/create_game_store.dart';
+import 'package:boilerplate/core/stores/form/game_error_store.dart';
+import 'package:boilerplate/core/stores/form/join_game_store.dart';
 import 'package:boilerplate/core/stores/game/game_store.dart';
+import 'package:boilerplate/core/stores/language/language_store.dart';
+import 'package:boilerplate/core/stores/theme/theme_store.dart';
 import 'package:boilerplate/domain/repository/setting/setting_repository.dart';
 import 'package:boilerplate/domain/usecase/game/create_game_usecase.dart';
+import 'package:boilerplate/domain/usecase/game/exit_game_usecase.dart';
 import 'package:boilerplate/domain/usecase/game/get_game_usecase.dart';
 import 'package:boilerplate/domain/usecase/game/join_game_usecase.dart';
 import 'package:boilerplate/domain/usecase/game/load_game_usecase.dart';
-import 'package:boilerplate/domain/usecase/post/get_post_usecase.dart';
-import 'package:boilerplate/presentation/game_field/store/language/language_store.dart';
-import 'package:boilerplate/presentation/game_field/store/theme/theme_store.dart';
 import '../../../di/service_locator.dart';
 
 mixin StoreModule {
@@ -19,8 +21,12 @@ mixin StoreModule {
     getIt.registerFactory(() => ErrorStore());
     getIt.registerFactory(() => GameErrorStore());
     getIt.registerFactory(
-      () => FormStore(getIt<GameErrorStore>(), getIt<ErrorStore>()),
+      () => JoinGameStore(getIt<GameErrorStore>(), getIt<ErrorStore>()),
     );
+    getIt.registerFactory(() => CreateGameStore(
+          getIt<GameErrorStore>(),
+          getIt<ErrorStore>(),
+        ));
 
     // stores:------------------------------------------------------------------
 
@@ -30,6 +36,7 @@ mixin StoreModule {
         getIt<JoinGameUseCase>(),
         getIt<CreateGameUseCase>(),
         getIt<LoadGameUseCase>(),
+        getIt<ExitGameUseCase>(),
         getIt<GameErrorStore>(),
         getIt<ErrorStore>(),
       ),

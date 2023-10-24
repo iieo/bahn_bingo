@@ -1,7 +1,9 @@
 import 'package:boilerplate/core/stores/error/error_store.dart';
-import 'package:boilerplate/core/stores/form/form_store.dart';
+import 'package:boilerplate/core/stores/form/game_error_store.dart';
+import 'package:boilerplate/core/stores/form/join_game_store.dart';
 import 'package:boilerplate/domain/entity/game/game.dart';
 import 'package:boilerplate/domain/usecase/game/create_game_usecase.dart';
+import 'package:boilerplate/domain/usecase/game/exit_game_usecase.dart';
 import 'package:boilerplate/domain/usecase/game/get_game_usecase.dart';
 import 'package:boilerplate/domain/usecase/game/join_game_usecase.dart';
 import 'package:boilerplate/domain/usecase/game/load_game_usecase.dart';
@@ -16,17 +18,27 @@ abstract class _GameStore with Store {
       this._joinGameUseCase,
       this._createGameUseCase,
       this._loadGameUseCase,
+      this._exitGameUseCase,
       this.gameErrorStore,
       this.errorStore) {
     _setupDisposers();
     _loadActiveGame();
   }
 
+  Future<void> callBingo() async {}
+
+  void exitGame() {
+    game = null;
+    _exitGameUseCase.call(params: null);
+  }
+
   Future<void> _loadActiveGame() async {
+    if (game != null) {
+      return;
+    }
     try {
       isLoading = true;
       game = await _loadGameUseCase.call(params: null);
-      print(game);
       success = game != null;
     } catch (e) {
       errorStore.errorMessage = "error_load_game";
@@ -38,6 +50,7 @@ abstract class _GameStore with Store {
   // use cases:-----------------------------------------------------------------
   final CreateGameUseCase _createGameUseCase;
   final JoinGameUseCase _joinGameUseCase;
+  final ExitGameUseCase _exitGameUseCase;
   final GetGameUseCase _getGameUseCase;
   final LoadGameUseCase _loadGameUseCase;
 
