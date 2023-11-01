@@ -6,14 +6,13 @@ import 'package:boilerplate/core/widgets/button_widget.dart';
 import 'package:boilerplate/core/widgets/empty_app_bar_widget.dart';
 import 'package:boilerplate/core/widgets/input_widget.dart';
 import 'package:boilerplate/core/widgets/progress_indicator_widget.dart';
-import 'package:boilerplate/data/sharedpref/constants/preferences.dart';
 import 'package:boilerplate/utils/device/device_utils.dart';
 import 'package:boilerplate/utils/locale/app_localization.dart';
+import 'package:boilerplate/utils/messages/show_message.dart';
 import 'package:boilerplate/utils/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../di/service_locator.dart';
 
@@ -51,7 +50,8 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
               builder: (context) {
                 return _gameStore.game != null
                     ? navigate(context)
-                    : _showErrorMessage(_eventsStore.errorStore.errorMessage);
+                    : showErrorMessage(
+                        context, _eventsStore.errorStore.errorMessage);
               },
             ),
             Observer(
@@ -171,9 +171,11 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                           DeviceUtils.hideKeyboard(context);
                           _gameStore.createGame(_eventsStore.events);
                         } else {
-                          _showErrorMessage("Error: " +
-                              AppLocalizations.of(context)
-                                  .translate('create_game_error_event_length'));
+                          showErrorMessage(
+                              context,
+                              "Error: " +
+                                  AppLocalizations.of(context).translate(
+                                      'create_game_error_event_length'));
                         }
                       },
                     )))
@@ -212,8 +214,8 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
             _eventsStore.addEvent(_gameEventController.text);
             _gameEventController.clear();
           } else {
-            _showErrorMessage(
-                "Error: " + _eventsStore.gameErrorStore.gameError!);
+            showErrorMessage(
+                context, "Error: " + _eventsStore.gameErrorStore.gameError!);
           }
         },
         text: AppLocalizations.of(context).translate('add_event'));
@@ -267,10 +269,6 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
   }
 
   Widget navigate(BuildContext context) {
-    SharedPreferences.getInstance().then((prefs) {
-      prefs.setString(Preferences.game_id, _gameEventController.text);
-    });
-
     Future.delayed(Duration(milliseconds: 0), () {
       Navigator.of(context).pushNamedAndRemoveUntil(
           Routes.home, (Route<dynamic> route) => false);
@@ -284,23 +282,6 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
       Navigator.of(context).pushNamedAndRemoveUntil(
           Routes.welcome, (Route<dynamic> route) => false);
     });
-  }
-
-  // General Methods:-----------------------------------------------------------
-  _showErrorMessage(String message) {
-    if (message.isNotEmpty) {
-      Future.delayed(Duration(milliseconds: 0), () {
-        if (message.isNotEmpty) {
-          FlushbarHelper.createError(
-            message: message,
-            title: AppLocalizations.of(context).translate('error'),
-            duration: Duration(seconds: 3),
-          )..show(context);
-        }
-      });
-    }
-
-    return SizedBox.shrink();
   }
 
   // dispose:-------------------------------------------------------------------

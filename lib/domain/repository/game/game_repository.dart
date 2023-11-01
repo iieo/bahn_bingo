@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:boilerplate/domain/entity/game/game.dart';
+import 'package:boilerplate/domain/usecase/game/toggle_event_usecase.dart';
 
 abstract class GameRepository {
   Future<Game?> createGame(List<String> events);
@@ -9,9 +10,11 @@ abstract class GameRepository {
 
   Future<Game?> loadActiveGame();
 
-  Future<String?> get gameId;
-
-  Future<bool> saveGameId(String gameId);
-
   Future<bool> removeGameId();
+
+  Future<Game?> toggleEvent(ToggleEventRequest index);
+
+  Future<bool> isGameFinished(String gameId);
+
+  Future<bool> callBingo(String gameId);
 }

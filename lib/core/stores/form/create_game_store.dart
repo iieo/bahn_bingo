@@ -15,14 +15,6 @@ abstract class _CreateGameStore with Store {
   _CreateGameStore(this.gameErrorStore, this.errorStore) {
     _setupValidations();
     gameErrorStore.gameError = "error_game_event_empty";
-    events.add("event1");
-    events.add("event2");
-    events.add("event3");
-    events.add("event4");
-    events.add("event5");
-    events.add("event6");
-    events.add("event7");
-    events.add("event8");
   }
 
   // disposers:-----------------------------------------------------------------

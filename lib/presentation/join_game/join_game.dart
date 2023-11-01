@@ -191,10 +191,6 @@ class _LoginGameScreenState extends State<LoginGameScreen> {
   }
 
   Widget navigate(BuildContext context) {
-    SharedPreferences.getInstance().then((prefs) {
-      prefs.setString(Preferences.game_id, _gameIdController.text);
-    });
-
     Future.delayed(Duration(milliseconds: 0), () {
       Navigator.of(context).pushNamedAndRemoveUntil(
           Routes.home, (Route<dynamic> route) => false);

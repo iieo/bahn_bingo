@@ -1,11 +1,13 @@
 import 'package:boilerplate/core/stores/error/error_store.dart';
 import 'package:boilerplate/core/stores/form/game_error_store.dart';
 import 'package:boilerplate/domain/entity/game/game.dart';
+import 'package:boilerplate/domain/usecase/game/call_bingo_usecase.dart';
 import 'package:boilerplate/domain/usecase/game/create_game_usecase.dart';
 import 'package:boilerplate/domain/usecase/game/exit_game_usecase.dart';
-import 'package:boilerplate/domain/usecase/game/get_game_usecase.dart';
+import 'package:boilerplate/domain/usecase/game/is_game_finished_usecase.dart';
 import 'package:boilerplate/domain/usecase/game/join_game_usecase.dart';
 import 'package:boilerplate/domain/usecase/game/load_game_usecase.dart';
+import 'package:boilerplate/domain/usecase/game/toggle_event_usecase.dart';
 import 'package:mobx/mobx.dart';
 part 'game_store.g.dart';
 
@@ -13,45 +15,27 @@ class GameStore = _GameStore with _$GameStore;
 
 abstract class _GameStore with Store {
   _GameStore(
-      this._getGameUseCase,
       this._joinGameUseCase,
       this._createGameUseCase,
       this._loadGameUseCase,
       this._exitGameUseCase,
+      this._toggleEventUseCase,
+      this._callBingoUseCase,
+      this._isGameFinishedUseCase,
       this.gameErrorStore,
       this.errorStore) {
     _setupDisposers();
     _loadActiveGame();
   }
 
-  Future<void> callBingo() async {}
-
-  void exitGame() {
-    game = null;
-    _exitGameUseCase.call(params: null);
-  }
-
-  Future<void> _loadActiveGame() async {
-    if (game != null) {
-      return;
-    }
-    try {
-      isLoading = true;
-      game = await _loadGameUseCase.call(params: null);
-      success = game != null;
-    } catch (e) {
-      errorStore.errorMessage = "error_load_game";
-    } finally {
-      isLoading = false;
-    }
-  }
-
   // use cases:-----------------------------------------------------------------
   final CreateGameUseCase _createGameUseCase;
   final JoinGameUseCase _joinGameUseCase;
   final ExitGameUseCase _exitGameUseCase;
-  final GetGameUseCase _getGameUseCase;
   final LoadGameUseCase _loadGameUseCase;
+  final ToggleEventUseCase _toggleEventUseCase;
+  final CallBingoUseCase _callBingoUseCase;
+  final IsGameFinishedUseCase _isGameFinishedUseCase;
 
   // stores:--------------------------------------------------------------------
   final GameErrorStore gameErrorStore;
@@ -64,6 +48,9 @@ abstract class _GameStore with Store {
   // store variables:-----------------------------------------------------------
   @observable
   Game? game = null;
+
+  @observable
+  bool isGameFinished = false;
 
   @observable
   bool success = false;
@@ -98,6 +85,62 @@ abstract class _GameStore with Store {
       success = game != null;
     } catch (e) {
       errorStore.errorMessage = "error_create_game";
+    } finally {
+      isLoading = false;
+    }
+  }
+
+  @action
+  Future<void> callBingo() async {
+    if (game == null) {
+      return;
+    }
+    if (!game!.canCallBingo) {
+      errorStore.errorMessage = "error_call_bingo_no_bingo";
+      return;
+    }
+    try {
+      isLoading = true;
+      isGameFinished = await _callBingoUseCase.call(params: game!.id);
+    } catch (e) {
+      errorStore.errorMessage = "error_call_bingo";
+    } finally {
+      isLoading = false;
+    }
+  }
+
+  @action
+  Future<void> toggleEvent(int index) async {
+    try {
+      isLoading = true;
+      game = await _toggleEventUseCase.call(
+          params: ToggleEventRequest(game!, index));
+      success = game != null;
+    } catch (e) {
+      errorStore.errorMessage = "error_toggle_event";
+    } finally {
+      isLoading = false;
+    }
+  }
+
+  @action
+  void exitGame() {
+    game = null;
+    _exitGameUseCase.call(params: null);
+  }
+
+  // reactions:-----------------------------------------------------------------
+  Future<void> _loadActiveGame() async {
+    if (game != null) {
+      return;
+    }
+    try {
+      isLoading = true;
+      game = await _loadGameUseCase.call(params: null);
+      isGameFinished = await _isGameFinishedUseCase.call(params: game!.id);
+      success = game != null;
+    } catch (e) {
+      errorStore.errorMessage = "error_load_game";
     } finally {
       isLoading = false;
     }

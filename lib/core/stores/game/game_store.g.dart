@@ -24,6 +24,22 @@ mixin _$GameStore on _GameStore, Store {
     });
   }
 
+  late final _$isGameFinishedAtom =
+      Atom(name: '_GameStore.isGameFinished', context: context);
+
+  @override
+  bool get isGameFinished {
+    _$isGameFinishedAtom.reportRead();
+    return super.isGameFinished;
+  }
+
+  @override
+  set isGameFinished(bool value) {
+    _$isGameFinishedAtom.reportWrite(value, super.isGameFinished, () {
+      super.isGameFinished = value;
+    });
+  }
+
   late final _$successAtom = Atom(name: '_GameStore.success', context: context);
 
   @override
@@ -71,6 +87,22 @@ mixin _$GameStore on _GameStore, Store {
     return _$createGameAsyncAction.run(() => super.createGame(events));
   }
 
+  late final _$callBingoAsyncAction =
+      AsyncAction('_GameStore.callBingo', context: context);
+
+  @override
+  Future<void> callBingo() {
+    return _$callBingoAsyncAction.run(() => super.callBingo());
+  }
+
+  late final _$toggleEventAsyncAction =
+      AsyncAction('_GameStore.toggleEvent', context: context);
+
+  @override
+  Future<void> toggleEvent(int index) {
+    return _$toggleEventAsyncAction.run(() => super.toggleEvent(index));
+  }
+
   late final _$_GameStoreActionController =
       ActionController(name: '_GameStore', context: context);
 
@@ -86,9 +118,21 @@ mixin _$GameStore on _GameStore, Store {
   }
 
   @override
+  void exitGame() {
+    final _$actionInfo =
+        _$_GameStoreActionController.startAction(name: '_GameStore.exitGame');
+    try {
+      return super.exitGame();
+    } finally {
+      _$_GameStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 game: ${game},
+isGameFinished: ${isGameFinished},
 success: ${success},
 isLoading: ${isLoading}
     ''';

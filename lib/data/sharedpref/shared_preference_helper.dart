@@ -31,6 +31,7 @@ class SharedPreferenceHelper {
   }
 
   Future<bool> saveGameId(String gameId) async {
+    print("Saving gameID: $gameId");
     return _sharedPreference.setString(Preferences.game_id, gameId);
   }
 

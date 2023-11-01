@@ -8,11 +8,13 @@ import 'package:boilerplate/core/stores/game/game_store.dart';
 import 'package:boilerplate/core/stores/language/language_store.dart';
 import 'package:boilerplate/core/stores/theme/theme_store.dart';
 import 'package:boilerplate/domain/repository/setting/setting_repository.dart';
+import 'package:boilerplate/domain/usecase/game/call_bingo_usecase.dart';
 import 'package:boilerplate/domain/usecase/game/create_game_usecase.dart';
 import 'package:boilerplate/domain/usecase/game/exit_game_usecase.dart';
-import 'package:boilerplate/domain/usecase/game/get_game_usecase.dart';
+import 'package:boilerplate/domain/usecase/game/is_game_finished_usecase.dart';
 import 'package:boilerplate/domain/usecase/game/join_game_usecase.dart';
 import 'package:boilerplate/domain/usecase/game/load_game_usecase.dart';
+import 'package:boilerplate/domain/usecase/game/toggle_event_usecase.dart';
 import '../../../di/service_locator.dart';
 
 mixin StoreModule {
@@ -32,11 +34,13 @@ mixin StoreModule {
 
     getIt.registerSingleton<GameStore>(
       GameStore(
-        getIt<GetGameUseCase>(),
         getIt<JoinGameUseCase>(),
         getIt<CreateGameUseCase>(),
         getIt<LoadGameUseCase>(),
         getIt<ExitGameUseCase>(),
+        getIt<ToggleEventUseCase>(),
+        getIt<CallBingoUseCase>(),
+        getIt<IsGameFinishedUseCase>(),
         getIt<GameErrorStore>(),
         getIt<ErrorStore>(),
       ),

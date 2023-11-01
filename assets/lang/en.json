@@ -3,7 +3,9 @@
   "app_description": "Play Bingo with your friends while traveling by train.",
   "join_game": "Join game",
   "create_game": "Create a game",
+  "create_game_title": "Create a game",
   "enter_game_id": "e.g. ABXY",
+  "enter_game_event": "e.g. The train doesn't stop at a station",
   "game_id": "Game ID",
   "start_join_game_title": "Enter Game ID to join a game",
   "mark_complete": "Mark complete",
@@ -11,6 +13,10 @@
   "bingo": "Bingo!",
   "card_no": "Card no.",
   "game_id_title": "Your games id is",
-  "error_gameid_empty":"Please enter a game id",
-  "error_gameid_length":"Game id must be 4 characters long"
+  "error_gameid_empty": "Please enter a game id",
+  "error_gameid_length": "Game id must be 4 characters long",
+  "game_finished": "Game finished",
+  "exit_game": "Exit game",
+  "change_theme": "Change theme",
+  "undo_bingo": "Undo bingo"
 }

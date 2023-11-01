@@ -1,21 +1,19 @@
 import 'dart:async';
 
 import 'package:boilerplate/domain/repository/game/game_repository.dart';
+import 'package:boilerplate/domain/usecase/game/call_bingo_usecase.dart';
 import 'package:boilerplate/domain/usecase/game/create_game_usecase.dart';
 import 'package:boilerplate/domain/usecase/game/exit_game_usecase.dart';
-import 'package:boilerplate/domain/usecase/game/get_game_usecase.dart';
+import 'package:boilerplate/domain/usecase/game/is_game_finished_usecase.dart';
 import 'package:boilerplate/domain/usecase/game/join_game_usecase.dart';
 import 'package:boilerplate/domain/usecase/game/load_game_usecase.dart';
+import 'package:boilerplate/domain/usecase/game/toggle_event_usecase.dart';
 
 import '../../../di/service_locator.dart';
 
 mixin UseCaseModule {
   static Future<void> configureUseCaseModuleInjection() async {
     // game:--------------------------------------------------------------------
-
-    getIt.registerSingleton<GetGameUseCase>(
-      GetGameUseCase(getIt<GameRepository>()),
-    );
 
     getIt.registerSingleton<JoinGameUseCase>(
       JoinGameUseCase(getIt<GameRepository>()),
@@ -30,6 +28,15 @@ mixin UseCaseModule {
     );
     getIt.registerSingleton<ExitGameUseCase>(
       ExitGameUseCase(getIt<GameRepository>()),
+    );
+    getIt.registerSingleton<ToggleEventUseCase>(
+      ToggleEventUseCase(getIt<GameRepository>()),
+    );
+    getIt.registerSingleton<CallBingoUseCase>(
+      CallBingoUseCase(getIt<GameRepository>()),
+    );
+    getIt.registerSingleton<IsGameFinishedUseCase>(
+      IsGameFinishedUseCase(getIt<GameRepository>()),
     );
   }
 }

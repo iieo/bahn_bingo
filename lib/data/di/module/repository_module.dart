@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:boilerplate/data/network/firebase/firebase_game.dart';
 import 'package:boilerplate/data/repository/setting/setting_repository_impl.dart';
 import 'package:boilerplate/data/repository/game/game_repository_impl.dart';
 import 'package:boilerplate/data/sharedpref/shared_preference_helper.dart';
@@ -17,6 +18,7 @@ mixin RepositoryModule {
 
     getIt.registerSingleton<GameRepository>(GameRepositoryImpl(
       getIt<SharedPreferenceHelper>(),
+      getIt<FirebaseGame>(),
     ));
   }
 }
