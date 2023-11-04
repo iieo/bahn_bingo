@@ -23,7 +23,6 @@ class _BingoGridItemState extends State<BingoGridItem>
   @override
   void initState() {
     reaction((_) => widget.item.done, (done) {
-      print("reaction");
       if (done) {
         _controller.forward();
       } else {
@@ -31,21 +30,11 @@ class _BingoGridItemState extends State<BingoGridItem>
       }
     });
     super.initState();
-    _controller = AnimationController(
-      vsync: this,
-      duration: Duration(milliseconds: 200),
-    );
 
-    _animation = TweenSequence([
-      TweenSequenceItem(
-        tween: Tween<double>(begin: 0.0, end: 1.0),
-        weight: 1.0,
-      ),
-      TweenSequenceItem(
-        tween: Tween<double>(begin: 1.0, end: 0.0),
-        weight: 1.0,
-      ),
-    ]).animate(_controller);
+    _controller = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 250))
+      ..value = widget.item.done ? 0.0 : 1.0;
+    _animation = Tween(end: 1.0, begin: 0.0).animate(_controller);
   }
 
   @override
@@ -62,8 +51,10 @@ class _BingoGridItemState extends State<BingoGridItem>
           alignment: FractionalOffset.center,
           transform: Matrix4.identity()
             ..setEntry(3, 2, 0.0015)
-            ..rotateX(pi * _animation.value),
-          child: _animation.value <= 0.5 ? _buildFront() : _buildBack(),
+            ..rotateY(pi * _animation.value),
+          child: _animation.value <= 0.5
+              ? _buildFront()
+              : Transform.scale(scaleX: -1, child: _buildBack()),
         ),
       );
     });
