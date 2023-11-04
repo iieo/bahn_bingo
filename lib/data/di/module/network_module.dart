@@ -1,8 +1,8 @@
-import 'package:boilerplate/core/data/network/dio/interceptors/auth_interceptor.dart';
-import 'package:boilerplate/core/data/network/dio/interceptors/logging_interceptor.dart';
-import 'package:boilerplate/data/network/firebase/firebase_client.dart';
-import 'package:boilerplate/data/network/firebase/firebase_game.dart';
-import 'package:boilerplate/data/sharedpref/shared_preference_helper.dart';
+import 'package:bahn_bingo/core/data/network/dio/interceptors/auth_interceptor.dart';
+import 'package:bahn_bingo/core/data/network/dio/interceptors/logging_interceptor.dart';
+import 'package:bahn_bingo/data/network/firebase/firebase_client.dart';
+import 'package:bahn_bingo/data/network/firebase/firebase_game.dart';
+import 'package:bahn_bingo/data/sharedpref/shared_preference_helper.dart';
 import 'package:event_bus/event_bus.dart';
 
 import '../../../di/service_locator.dart';

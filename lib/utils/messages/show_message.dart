@@ -1,6 +1,6 @@
 // General Methods:-----------------------------------------------------------
 import 'package:another_flushbar/flushbar_helper.dart';
-import 'package:boilerplate/utils/locale/app_localization.dart';
+import 'package:bahn_bingo/utils/locale/app_localization.dart';
 import 'package:flutter/material.dart';
 
 showErrorMessage(BuildContext context, String message) {

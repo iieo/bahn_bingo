@@ -1,14 +1,9 @@
-import 'package:boilerplate/constants/colors.dart';
-import 'package:boilerplate/core/stores/game/game_store.dart';
-import 'package:boilerplate/core/widgets/button_widget.dart';
-import 'package:boilerplate/di/service_locator.dart';
-import 'package:boilerplate/utils/locale/app_localization.dart';
-import 'package:boilerplate/utils/routes/routes.dart';
+import 'package:bahn_bingo/core/widgets/button_widget.dart';
+import 'package:bahn_bingo/utils/locale/app_localization.dart';
+import 'package:bahn_bingo/utils/routes/routes.dart';
 import 'package:flutter/material.dart';
 
 class WelcomeScreen extends StatelessWidget {
-  final GameStore _gameStore = getIt<GameStore>();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

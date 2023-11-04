@@ -1,15 +1,15 @@
 import 'package:another_flushbar/flushbar_helper.dart';
-import 'package:boilerplate/constants/dimens.dart';
-import 'package:boilerplate/core/stores/form/join_game_store.dart';
-import 'package:boilerplate/core/stores/game/game_store.dart';
-import 'package:boilerplate/core/widgets/button_widget.dart';
-import 'package:boilerplate/core/widgets/empty_app_bar_widget.dart';
-import 'package:boilerplate/core/widgets/input_widget.dart';
-import 'package:boilerplate/core/widgets/progress_indicator_widget.dart';
-import 'package:boilerplate/data/sharedpref/constants/preferences.dart';
-import 'package:boilerplate/utils/device/device_utils.dart';
-import 'package:boilerplate/utils/locale/app_localization.dart';
-import 'package:boilerplate/utils/routes/routes.dart';
+import 'package:bahn_bingo/constants/dimens.dart';
+import 'package:bahn_bingo/core/stores/form/join_game_store.dart';
+import 'package:bahn_bingo/core/stores/game/game_store.dart';
+import 'package:bahn_bingo/core/widgets/button_widget.dart';
+import 'package:bahn_bingo/core/widgets/empty_app_bar_widget.dart';
+import 'package:bahn_bingo/core/widgets/input_widget.dart';
+import 'package:bahn_bingo/core/widgets/progress_indicator_widget.dart';
+import 'package:bahn_bingo/data/sharedpref/constants/preferences.dart';
+import 'package:bahn_bingo/utils/device/device_utils.dart';
+import 'package:bahn_bingo/utils/locale/app_localization.dart';
+import 'package:bahn_bingo/utils/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:ionicons/ionicons.dart';
@@ -42,7 +42,7 @@ class _LoginGameScreenState extends State<LoginGameScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        primary: true,
+        backgroundColor: Theme.of(context).colorScheme.primary,
         appBar: EmptyAppBar(),
         body: Stack(
           children: <Widget>[
@@ -172,6 +172,7 @@ class _LoginGameScreenState extends State<LoginGameScreen> {
     return Observer(builder: (context) {
       return InputWidget(
         maxLength: 4,
+        height: 78.0,
         inputType: TextInputType.emailAddress,
         icon: Icons.person,
         textController: _gameIdController,

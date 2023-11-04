@@ -1,4 +1,4 @@
-import 'package:boilerplate/domain/repository/game/game_repository.dart';
+import 'package:bahn_bingo/domain/repository/game/game_repository.dart';
 
 import '../../../core/domain/usecase/use_case.dart';
 import '../../entity/game/game.dart';

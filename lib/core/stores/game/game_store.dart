@@ -1,13 +1,13 @@
-import 'package:boilerplate/core/stores/error/error_store.dart';
-import 'package:boilerplate/core/stores/form/game_error_store.dart';
-import 'package:boilerplate/domain/entity/game/game.dart';
-import 'package:boilerplate/domain/usecase/game/call_bingo_usecase.dart';
-import 'package:boilerplate/domain/usecase/game/create_game_usecase.dart';
-import 'package:boilerplate/domain/usecase/game/exit_game_usecase.dart';
-import 'package:boilerplate/domain/usecase/game/is_game_finished_usecase.dart';
-import 'package:boilerplate/domain/usecase/game/join_game_usecase.dart';
-import 'package:boilerplate/domain/usecase/game/load_game_usecase.dart';
-import 'package:boilerplate/domain/usecase/game/toggle_event_usecase.dart';
+import 'package:bahn_bingo/core/stores/error/error_store.dart';
+import 'package:bahn_bingo/core/stores/form/game_error_store.dart';
+import 'package:bahn_bingo/domain/entity/game/game.dart';
+import 'package:bahn_bingo/domain/usecase/game/call_bingo_usecase.dart';
+import 'package:bahn_bingo/domain/usecase/game/create_game_usecase.dart';
+import 'package:bahn_bingo/domain/usecase/game/exit_game_usecase.dart';
+import 'package:bahn_bingo/domain/usecase/game/is_game_finished_usecase.dart';
+import 'package:bahn_bingo/domain/usecase/game/join_game_usecase.dart';
+import 'package:bahn_bingo/domain/usecase/game/load_game_usecase.dart';
+import 'package:bahn_bingo/domain/usecase/game/toggle_event_usecase.dart';
 import 'package:mobx/mobx.dart';
 part 'game_store.g.dart';
 
@@ -25,7 +25,6 @@ abstract class _GameStore with Store {
       this.gameErrorStore,
       this.errorStore) {
     _setupDisposers();
-    _loadActiveGame();
   }
 
   // use cases:-----------------------------------------------------------------
@@ -130,20 +129,20 @@ abstract class _GameStore with Store {
   }
 
   // reactions:-----------------------------------------------------------------
-  Future<void> _loadActiveGame() async {
+  Future<bool> loadActiveGame() async {
     if (game != null) {
-      return;
+      return true;
     }
     try {
       isLoading = true;
       game = await _loadGameUseCase.call(params: null);
       isGameFinished = await _isGameFinishedUseCase.call(params: game!.id);
-      success = game != null;
     } catch (e) {
       errorStore.errorMessage = "error_load_game";
     } finally {
       isLoading = false;
     }
+    return game != null;
   }
 
   void _setupDisposers() {

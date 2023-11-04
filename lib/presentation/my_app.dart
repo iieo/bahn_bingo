@@ -1,12 +1,12 @@
-import 'package:boilerplate/constants/app_theme.dart';
-import 'package:boilerplate/constants/strings.dart';
-import 'package:boilerplate/core/stores/game/game_store.dart';
-import 'package:boilerplate/core/stores/language/language_store.dart';
-import 'package:boilerplate/core/stores/theme/theme_store.dart';
-import 'package:boilerplate/presentation/game_field/game_field.dart';
-import 'package:boilerplate/presentation/welcome/welcome.dart';
-import 'package:boilerplate/utils/locale/app_localization.dart';
-import 'package:boilerplate/utils/routes/routes.dart';
+import 'package:bahn_bingo/constants/app_theme.dart';
+import 'package:bahn_bingo/constants/strings.dart';
+import 'package:bahn_bingo/core/stores/game/game_store.dart';
+import 'package:bahn_bingo/core/stores/language/language_store.dart';
+import 'package:bahn_bingo/core/stores/theme/theme_store.dart';
+import 'package:bahn_bingo/presentation/game_field/game_field.dart';
+import 'package:bahn_bingo/presentation/welcome/welcome.dart';
+import 'package:bahn_bingo/utils/locale/app_localization.dart';
+import 'package:bahn_bingo/utils/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -49,9 +49,31 @@ class MyApp extends StatelessWidget {
                 // Built-in localization of basic text for Cupertino widgets
                 GlobalCupertinoLocalizations.delegate,
               ],
-              home:
-                  _gameStore.game != null ? GameFieldScreen() : WelcomeScreen(),
+              home: _loadScreen(),
             ));
+      },
+    );
+  }
+
+  Widget _loadScreen() {
+    return FutureBuilder(
+      future: _gameStore.loadActiveGame(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.hasError) {
+            return Text(snapshot.error.toString());
+          } else {
+            return snapshot.hasData && (snapshot.data ?? false)
+                ? GameFieldScreen()
+                : WelcomeScreen();
+          }
+        } else {
+          return Scaffold(
+            body: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
+        }
       },
     );
   }

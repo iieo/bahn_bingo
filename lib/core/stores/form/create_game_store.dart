@@ -1,5 +1,5 @@
-import 'package:boilerplate/core/stores/error/error_store.dart';
-import 'package:boilerplate/core/stores/form/game_error_store.dart';
+import 'package:bahn_bingo/core/stores/error/error_store.dart';
+import 'package:bahn_bingo/core/stores/form/game_error_store.dart';
 import 'package:mobx/mobx.dart';
 
 part 'create_game_store.g.dart';

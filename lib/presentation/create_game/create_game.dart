@@ -1,15 +1,15 @@
 import 'package:another_flushbar/flushbar_helper.dart';
-import 'package:boilerplate/constants/dimens.dart';
-import 'package:boilerplate/core/stores/form/create_game_store.dart';
-import 'package:boilerplate/core/stores/game/game_store.dart';
-import 'package:boilerplate/core/widgets/button_widget.dart';
-import 'package:boilerplate/core/widgets/empty_app_bar_widget.dart';
-import 'package:boilerplate/core/widgets/input_widget.dart';
-import 'package:boilerplate/core/widgets/progress_indicator_widget.dart';
-import 'package:boilerplate/utils/device/device_utils.dart';
-import 'package:boilerplate/utils/locale/app_localization.dart';
-import 'package:boilerplate/utils/messages/show_message.dart';
-import 'package:boilerplate/utils/routes/routes.dart';
+import 'package:bahn_bingo/constants/dimens.dart';
+import 'package:bahn_bingo/core/stores/form/create_game_store.dart';
+import 'package:bahn_bingo/core/stores/game/game_store.dart';
+import 'package:bahn_bingo/core/widgets/button_widget.dart';
+import 'package:bahn_bingo/core/widgets/empty_app_bar_widget.dart';
+import 'package:bahn_bingo/core/widgets/input_widget.dart';
+import 'package:bahn_bingo/core/widgets/progress_indicator_widget.dart';
+import 'package:bahn_bingo/utils/device/device_utils.dart';
+import 'package:bahn_bingo/utils/locale/app_localization.dart';
+import 'package:bahn_bingo/utils/messages/show_message.dart';
+import 'package:bahn_bingo/utils/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:ionicons/ionicons.dart';
@@ -41,7 +41,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        primary: true,
+        backgroundColor: Theme.of(context).colorScheme.primary,
         appBar: EmptyAppBar(),
         body: Stack(
           children: <Widget>[

@@ -37,6 +37,7 @@ class AppThemeData {
 
   static ThemeData themeData(ColorScheme colorScheme, Color focusColor) {
     return ThemeData(
+      fontFamily: GoogleFonts.openSans().fontFamily,
       colorScheme: colorScheme,
       textTheme: _textTheme,
       // Matches manifest.json colors and background color.

@@ -2,7 +2,7 @@ import 'dart:math';
 
 String generateRandomId() {
   final random = Random();
-  final chars =
+  const chars =
       'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 
   String id = '';

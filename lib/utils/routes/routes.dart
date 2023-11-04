@@ -1,7 +1,7 @@
-import 'package:boilerplate/presentation/create_game/create_game.dart';
-import 'package:boilerplate/presentation/game_field/game_field.dart';
-import 'package:boilerplate/presentation/join_game/join_game.dart';
-import 'package:boilerplate/presentation/welcome/welcome.dart';
+import 'package:bahn_bingo/presentation/create_game/create_game.dart';
+import 'package:bahn_bingo/presentation/game_field/game_field.dart';
+import 'package:bahn_bingo/presentation/join_game/join_game.dart';
+import 'package:bahn_bingo/presentation/welcome/welcome.dart';
 import 'package:flutter/material.dart';
 
 class Routes {

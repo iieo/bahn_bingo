@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:boilerplate/domain/entity/game/game.dart';
-import 'package:boilerplate/domain/usecase/game/toggle_event_usecase.dart';
+import 'package:bahn_bingo/domain/entity/game/game.dart';
+import 'package:bahn_bingo/domain/usecase/game/toggle_event_usecase.dart';
 
 abstract class GameRepository {
   Future<Game?> createGame(List<String> events);

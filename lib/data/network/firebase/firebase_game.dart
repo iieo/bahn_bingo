@@ -1,5 +1,5 @@
-import 'package:boilerplate/data/network/firebase/firebase_client.dart';
-import 'package:boilerplate/domain/entity/game/game.dart';
+import 'package:bahn_bingo/data/network/firebase/firebase_client.dart';
+import 'package:bahn_bingo/domain/entity/game/game.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FirebaseGame {
@@ -23,9 +23,13 @@ class FirebaseGame {
 
   Future<Game?> getGameFromDocument(DocumentSnapshot document) async {
     if (document.exists) {
-      final data = document.data() as Map<String, dynamic>;
-      data["id"] = document.id;
-      return Game.fromJson(data);
+      try {
+        final data = document.data() as Map<String, dynamic>;
+        data["id"] = document.id;
+        return Game.fromJson(data);
+      } catch (e) {
+        print(e);
+      }
     } else {
       print("Game ${document.id} does not exist");
     }

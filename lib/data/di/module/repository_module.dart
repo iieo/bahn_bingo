@@ -1,11 +1,11 @@
 import 'dart:async';
 
-import 'package:boilerplate/data/network/firebase/firebase_game.dart';
-import 'package:boilerplate/data/repository/setting/setting_repository_impl.dart';
-import 'package:boilerplate/data/repository/game/game_repository_impl.dart';
-import 'package:boilerplate/data/sharedpref/shared_preference_helper.dart';
-import 'package:boilerplate/domain/repository/setting/setting_repository.dart';
-import 'package:boilerplate/domain/repository/game/game_repository.dart';
+import 'package:bahn_bingo/data/network/firebase/firebase_game.dart';
+import 'package:bahn_bingo/data/repository/setting/setting_repository_impl.dart';
+import 'package:bahn_bingo/data/repository/game/game_repository_impl.dart';
+import 'package:bahn_bingo/data/sharedpref/shared_preference_helper.dart';
+import 'package:bahn_bingo/domain/repository/setting/setting_repository.dart';
+import 'package:bahn_bingo/domain/repository/game/game_repository.dart';
 
 import '../../../di/service_locator.dart';
 

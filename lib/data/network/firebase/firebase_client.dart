@@ -1,4 +1,4 @@
-import 'package:boilerplate/data/sharedpref/shared_preference_helper.dart';
+import 'package:bahn_bingo/data/sharedpref/shared_preference_helper.dart';
 import 'package:uuid/uuid.dart';
 
 class FirebaseClient {
