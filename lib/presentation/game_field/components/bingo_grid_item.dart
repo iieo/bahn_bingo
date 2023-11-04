@@ -32,9 +32,10 @@ class _BingoGridItemState extends State<BingoGridItem>
     super.initState();
 
     _controller = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 250))
+        vsync: this, duration: const Duration(milliseconds: 500))
       ..value = widget.item.done ? 0.0 : 1.0;
-    _animation = Tween(end: 1.0, begin: 0.0).animate(_controller);
+    _animation = Tween(end: 1.0, begin: 0.0).animate(
+        CurvedAnimation(parent: _controller, curve: Curves.fastOutSlowIn));
   }
 
   @override

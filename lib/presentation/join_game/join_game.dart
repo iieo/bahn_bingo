@@ -13,7 +13,6 @@ import 'package:bahn_bingo/utils/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../di/service_locator.dart';
 
@@ -75,12 +74,13 @@ class _LoginGameScreenState extends State<LoginGameScreen> {
             clipBehavior: Clip.none,
             children: <Widget>[
               Positioned(
-                right: 0,
-                top: -20.0,
+                height: 140,
+                right: 10,
+                top: -10,
                 child: Opacity(
-                  opacity: 0.3,
+                  opacity: 0.1,
                   child: Image.asset(
-                    "assets/images/washing_machine_illustration.png",
+                    "assets/images/railway.png",
                   ),
                 ),
               ),

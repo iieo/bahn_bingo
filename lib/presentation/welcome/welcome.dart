@@ -13,17 +13,48 @@ class WelcomeScreen extends StatelessWidget {
           flex: 3,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                height: 200,
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage("assets/images/logo.png"),
+                  padding: const EdgeInsets.all(55.0),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.background,
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(30.0),
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.1),
+                        spreadRadius: 0,
+                        blurRadius: 10,
+                        offset: const Offset(0, -5),
+                      ),
+                    ],
+                    shape: BoxShape.rectangle,
                   ),
-                ),
-              ),
-              Text(AppLocalizations.of(context).translate('app_name'),
-                  style: Theme.of(context).textTheme.headlineLarge),
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          height: 150,
+                          width: 150,
+                          decoration: const BoxDecoration(
+                            image: DecorationImage(
+                              image: AssetImage("assets/icons/ic_launcher.png"),
+                            ),
+                          ),
+                        ),
+                        Text(AppLocalizations.of(context).translate('app_name'),
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineLarge
+                                ?.apply(
+                                  color: Theme.of(context).colorScheme.primary,
+                                ))
+                      ])),
             ],
           ),
         ),
@@ -49,8 +80,7 @@ class WelcomeScreen extends StatelessWidget {
                 ),
               ],
             ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            child: ListView(
               children: [
                 const SizedBox(height: 20.0),
                 Text(

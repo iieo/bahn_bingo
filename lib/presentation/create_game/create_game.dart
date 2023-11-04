@@ -1,4 +1,3 @@
-import 'package:another_flushbar/flushbar_helper.dart';
 import 'package:bahn_bingo/constants/dimens.dart';
 import 'package:bahn_bingo/core/stores/form/create_game_store.dart';
 import 'package:bahn_bingo/core/stores/game/game_store.dart';
@@ -75,12 +74,13 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
             clipBehavior: Clip.none,
             children: <Widget>[
               Positioned(
-                right: 0,
-                top: -20.0,
+                height: 140,
+                right: 10,
+                top: -10,
                 child: Opacity(
-                  opacity: 0.3,
+                  opacity: 0.1,
                   child: Image.asset(
-                    "assets/images/washing_machine_illustration.png",
+                    "assets/images/railway.png",
                   ),
                 ),
               ),
@@ -92,7 +92,9 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                   const SizedBox(
                     height: Dimens.vertical_padding,
                   ),
-                  _buildInputUI(),
+                  Expanded(
+                    child: _buildInputUI(),
+                  )
                 ],
               ),
             ],
@@ -128,23 +130,22 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
   }
 
   Widget _buildInputUI() {
-    return Flexible(
-      child: Container(
-        constraints: BoxConstraints(
-          minHeight: MediaQuery.of(context).size.height - 180.0,
-        ),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(30.0),
-              topRight: Radius.circular(30.0),
-            ),
-            color: Theme.of(context).colorScheme.background),
-        padding: const EdgeInsets.all(24.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Expanded(
+    return Container(
+      constraints: BoxConstraints(
+        minHeight: MediaQuery.of(context).size.height - 180.0,
+      ),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(30.0),
+            topRight: Radius.circular(30.0),
+          ),
+          color: Theme.of(context).colorScheme.background),
+      padding: const EdgeInsets.all(24.0),
+      child: Column(children: [
+        Expanded(
+            child: CustomScrollView(
+          slivers: [
+            SliverToBoxAdapter(
                 child: Container(
                     child: Column(
               children: [
@@ -157,51 +158,53 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                   height: 20,
                 ),
                 _buildAddEventButton(),
-                _buildEventList(),
               ],
             ))),
-            Observer(
-                builder: ((context) => AppButton(
-                      focusNode: _createButtonFocusNode,
-                      type: ButtonType.PRIMARY,
-                      text:
-                          AppLocalizations.of(context).translate('create_game'),
-                      onPressed: () async {
-                        if (_eventsStore.canCreateGame) {
-                          DeviceUtils.hideKeyboard(context);
-                          _gameStore.createGame(_eventsStore.events);
-                        } else {
-                          showErrorMessage(
-                              context,
-                              "Error: " +
-                                  AppLocalizations.of(context).translate(
-                                      'create_game_error_event_length'));
-                        }
-                      },
-                    )))
+            _buildEventList(),
           ],
-        ),
-      ),
+        )),
+        _buildCreateGameButton()
+      ]),
     );
+  }
+
+  Widget _buildCreateGameButton() {
+    return Observer(
+        builder: ((context) => AppButton(
+              focusNode: _createButtonFocusNode,
+              type: ButtonType.PRIMARY,
+              text: AppLocalizations.of(context).translate('create_game'),
+              onPressed: () async {
+                if (_eventsStore.canCreateGame) {
+                  DeviceUtils.hideKeyboard(context);
+                  _gameStore.createGame(_eventsStore.events);
+                } else {
+                  showErrorMessage(
+                      context,
+                      "Error: " +
+                          AppLocalizations.of(context)
+                              .translate('create_game_error_event_length'));
+                }
+              },
+            )));
   }
 
   Widget _buildEventList() {
     return Observer(builder: (context) {
-      return Expanded(
-          child: ListView.separated(
-              separatorBuilder: (context, index) => Divider(),
-              itemCount: _eventsStore.events.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(_eventsStore.events[index]),
-                  trailing: IconButton(
-                    icon: Icon(Icons.delete),
-                    onPressed: () {
-                      _eventsStore.removeEvent(index);
-                    },
-                  ),
-                );
-              }));
+      return SliverList.separated(
+          separatorBuilder: (context, index) => Divider(),
+          itemCount: _eventsStore.events.length,
+          itemBuilder: (context, index) {
+            return ListTile(
+              title: Text(_eventsStore.events[index]),
+              trailing: IconButton(
+                icon: Icon(Icons.delete),
+                onPressed: () {
+                  _eventsStore.removeEvent(index);
+                },
+              ),
+            );
+          });
     });
   }
 
@@ -222,16 +225,16 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
   }
 
   Widget _buildAmountSlider() {
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Text(
-        AppLocalizations.of(context).translate('field_size') +
-            ": " +
-            _eventsStore.fieldSize.toString(),
-        textAlign: TextAlign.left,
-        style: Theme.of(context).textTheme.bodyMedium,
-      ),
-      Observer(builder: (context) {
-        return Slider(
+    return Observer(builder: (context) {
+      return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Text(
+          AppLocalizations.of(context).translate('field_size') +
+              ": " +
+              _eventsStore.fieldSize.toString(),
+          textAlign: TextAlign.left,
+          style: Theme.of(context).textTheme.bodyMedium,
+        ),
+        Slider(
           value: _eventsStore.fieldSize.toDouble(),
           min: 3,
           max: 5,
@@ -242,9 +245,9 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
           onChanged: (double value) {
             _eventsStore.setFieldSize(value.toInt());
           },
-        );
-      })
-    ]);
+        )
+      ]);
+    });
   }
 
   Widget _buildGameEventInputField() {
