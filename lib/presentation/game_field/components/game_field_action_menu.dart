@@ -4,6 +4,7 @@ import 'package:bahn_bingo/di/service_locator.dart';
 import 'package:bahn_bingo/utils/locale/app_localization.dart';
 import 'package:bahn_bingo/utils/routes/routes.dart';
 import 'package:flutter/material.dart';
+import 'package:share_plus/share_plus.dart';
 
 class GameFieldActionMenu extends StatelessWidget {
   final ThemeStore _themeStore = getIt<ThemeStore>();
@@ -17,14 +18,13 @@ class GameFieldActionMenu extends StatelessWidget {
         return [
           PopupMenuItem(
             child: Text(
-              AppLocalizations.of(context).translate('exit_game'),
+              AppLocalizations.of(context).translate('share_game'),
               style: Theme.of(context).textTheme.labelLarge,
             ),
-            onTap: () async {
-              _gameStore.exitGame();
-              //nav to home
-              Navigator.of(context).pushNamedAndRemoveUntil(
-                  Routes.welcome, (Route<dynamic> route) => false);
+            onTap: () {
+              Share.share(
+                  AppLocalizations.of(context).translate('share_game_text') +
+                      " ${_gameStore.game?.id ?? 'error'}");
             },
           ),
           PopupMenuItem(
@@ -38,13 +38,16 @@ class GameFieldActionMenu extends StatelessWidget {
           ),
           PopupMenuItem(
             child: Text(
-              AppLocalizations.of(context).translate('change_theme'),
+              AppLocalizations.of(context).translate('exit_game'),
               style: Theme.of(context).textTheme.labelLarge,
             ),
-            onTap: () {
-              _themeStore.changeBrightnessToDark(!_themeStore.darkMode);
+            onTap: () async {
+              _gameStore.exitGame();
+              //nav to home
+              Navigator.of(context).pushNamedAndRemoveUntil(
+                  Routes.welcome, (Route<dynamic> route) => false);
             },
-          )
+          ),
         ];
       },
       onSelected: (value) {

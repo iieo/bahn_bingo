@@ -8,6 +8,7 @@ import 'package:bahn_bingo/core/stores/game/game_store.dart';
 import 'package:bahn_bingo/core/stores/language/language_store.dart';
 import 'package:bahn_bingo/core/stores/theme/theme_store.dart';
 import 'package:bahn_bingo/domain/repository/setting/setting_repository.dart';
+import 'package:bahn_bingo/domain/usecase/create/get_suggestion_usecase.dart';
 import 'package:bahn_bingo/domain/usecase/game/call_bingo_usecase.dart';
 import 'package:bahn_bingo/domain/usecase/game/create_game_usecase.dart';
 import 'package:bahn_bingo/domain/usecase/game/exit_game_usecase.dart';
@@ -25,12 +26,13 @@ mixin StoreModule {
     getIt.registerFactory(
       () => JoinGameStore(getIt<GameErrorStore>(), getIt<ErrorStore>()),
     );
+    // stores:------------------------------------------------------------------
+
     getIt.registerFactory(() => CreateGameStore(
           getIt<GameErrorStore>(),
           getIt<ErrorStore>(),
+          getIt<GetSuggestionUseCase>(),
         ));
-
-    // stores:------------------------------------------------------------------
 
     getIt.registerSingleton<GameStore>(
       GameStore(

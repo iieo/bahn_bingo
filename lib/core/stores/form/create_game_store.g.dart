@@ -28,13 +28,13 @@ mixin _$CreateGameStore on _CreateGameStore, Store {
       Atom(name: '_CreateGameStore.events', context: context);
 
   @override
-  List<String> get events {
+  ObservableList<String> get events {
     _$eventsAtom.reportRead();
     return super.events;
   }
 
   @override
-  set events(List<String> value) {
+  set events(ObservableList<String> value) {
     _$eventsAtom.reportWrite(value, super.events, () {
       super.events = value;
     });
@@ -70,6 +70,14 @@ mixin _$CreateGameStore on _CreateGameStore, Store {
     _$currentEventAtom.reportWrite(value, super.currentEvent, () {
       super.currentEvent = value;
     });
+  }
+
+  late final _$inventEventAsyncAction =
+      AsyncAction('_CreateGameStore.inventEvent', context: context);
+
+  @override
+  Future<void> inventEvent() {
+    return _$inventEventAsyncAction.run(() => super.inventEvent());
   }
 
   late final _$_CreateGameStoreActionController =

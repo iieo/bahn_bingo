@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bahn_bingo/domain/repository/game/game_repository.dart';
+import 'package:bahn_bingo/domain/usecase/create/get_suggestion_usecase.dart';
 import 'package:bahn_bingo/domain/usecase/game/call_bingo_usecase.dart';
 import 'package:bahn_bingo/domain/usecase/game/create_game_usecase.dart';
 import 'package:bahn_bingo/domain/usecase/game/exit_game_usecase.dart';
@@ -37,6 +38,9 @@ mixin UseCaseModule {
     );
     getIt.registerSingleton<IsGameFinishedUseCase>(
       IsGameFinishedUseCase(getIt<GameRepository>()),
+    );
+    getIt.registerSingleton<GetSuggestionUseCase>(
+      GetSuggestionUseCase(getIt<GameRepository>()),
     );
   }
 }

@@ -17,4 +17,6 @@ abstract class GameRepository {
   Future<bool> isGameFinished(String gameId);
 
   Future<bool> callBingo(String gameId);
+
+  Future<String> getSuggestion();
 }

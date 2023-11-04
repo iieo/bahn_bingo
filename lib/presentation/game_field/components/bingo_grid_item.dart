@@ -39,6 +39,12 @@ class _BingoGridItemState extends State<BingoGridItem>
   }
 
   @override
+  dispose() {
+    _controller.dispose(); // you need this
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Observer(builder: (context) {
       if (_controller.isCompleted) {
@@ -81,7 +87,7 @@ class _BingoGridItemState extends State<BingoGridItem>
     return Container(
         decoration: BoxDecoration(
       image: DecorationImage(
-        image: AssetImage("assets/images/logo.png"),
+        image: AssetImage("assets/icons/ic_launcher.png"),
       ),
       color: Theme.of(context).colorScheme.primary,
       boxShadow: [

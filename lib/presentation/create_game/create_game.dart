@@ -158,6 +158,10 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                   height: 20,
                 ),
                 _buildAddEventButton(),
+                const SizedBox(
+                  height: 8,
+                ),
+                _buildAddInventButton(),
               ],
             ))),
             _buildEventList(),
@@ -222,6 +226,13 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
           }
         },
         text: AppLocalizations.of(context).translate('add_event'));
+  }
+
+  Widget _buildAddInventButton() {
+    return AppButton(
+        type: ButtonType.PLAIN,
+        onPressed: _eventsStore.inventEvent,
+        text: AppLocalizations.of(context).translate('invent_event'));
   }
 
   Widget _buildAmountSlider() {

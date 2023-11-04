@@ -84,5 +84,11 @@ class GameRepositoryImpl extends GameRepository {
   }
 
   @override
+  Future<String> getSuggestion() async {
+    List<String> suggestions = await _firebaseGame.getSuggestions();
+    return suggestions[Random().nextInt(suggestions.length)];
+  }
+
+  @override
   Future<bool> removeGameId() => _sharedPrefsHelper.removeGameId();
 }

@@ -1,5 +1,6 @@
 import 'package:bahn_bingo/core/stores/error/error_store.dart';
 import 'package:bahn_bingo/core/stores/form/game_error_store.dart';
+import 'package:bahn_bingo/domain/usecase/create/get_suggestion_usecase.dart';
 import 'package:mobx/mobx.dart';
 
 part 'create_game_store.g.dart';
@@ -12,7 +13,10 @@ abstract class _CreateGameStore with Store {
   // store for handling error messages
   final ErrorStore errorStore;
 
-  _CreateGameStore(this.gameErrorStore, this.errorStore) {
+  final GetSuggestionUseCase getSuggestionUseCase;
+
+  _CreateGameStore(
+      this.gameErrorStore, this.errorStore, this.getSuggestionUseCase) {
     _setupValidations();
     gameErrorStore.gameError = "error_game_event_empty";
   }
@@ -28,7 +32,7 @@ abstract class _CreateGameStore with Store {
 
   // store variables:-----------------------------------------------------------
   @observable
-  List<String> events = [];
+  ObservableList<String> events = ObservableList<String>();
 
   @observable
   int fieldSize = 3;
@@ -75,6 +79,12 @@ abstract class _CreateGameStore with Store {
     } else {
       gameErrorStore.gameError = null;
     }
+  }
+
+  @action
+  Future<void> inventEvent() async {
+    String suggestion = await getSuggestionUseCase.call(params: null);
+    events.add(suggestion);
   }
 
   // general methods:-----------------------------------------------------------

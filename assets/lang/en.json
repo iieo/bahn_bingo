@@ -18,5 +18,9 @@
   "game_finished": "Game finished",
   "exit_game": "Exit game",
   "change_theme": "Change theme",
-  "undo_bingo": "Undo bingo"
+  "undo_bingo": "Undo bingo",
+  "add_event": "Add event",
+  "invent_event": "Invent event",
+  "share_game": "Share game",
+  "share_game_text": "Hey, wanna play Bahn Bingo with me? My game id is"
 }

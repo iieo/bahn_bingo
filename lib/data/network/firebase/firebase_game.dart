@@ -114,4 +114,10 @@ class FirebaseGame {
     }
     return false;
   }
+
+  Future<List<String>> getSuggestions() async {
+    final document =
+        await _firestore.collection("suggestions").doc("DE_de").get();
+    return List<String>.from(document.data()?["events"] ?? []);
+  }
 }
