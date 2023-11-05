@@ -43,7 +43,7 @@ class WelcomeScreen extends StatelessWidget {
                           width: 150,
                           decoration: const BoxDecoration(
                             image: DecorationImage(
-                              image: AssetImage("assets/icons/ic_launcher.png"),
+                              image: AssetImage("assets/images/logo.png"),
                             ),
                           ),
                         ),

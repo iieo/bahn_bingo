@@ -87,7 +87,7 @@ class _BingoGridItemState extends State<BingoGridItem>
     return Container(
         decoration: BoxDecoration(
       image: DecorationImage(
-        image: AssetImage("assets/icons/ic_launcher.png"),
+        image: AssetImage("assets/images/logo.png"),
       ),
       color: Theme.of(context).colorScheme.primary,
       boxShadow: [
