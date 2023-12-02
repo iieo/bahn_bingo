@@ -1,6 +1,6 @@
 {
   "app_name": "Bahn Bingo",
-  "app_description": "Play Bingo with your friends while traveling by train.",
+  "app_description": "More fun riding the train",
   "join_game": "Join game",
   "create_game": "Create a game",
   "create_game_title": "Create a game",
@@ -11,7 +11,7 @@
   "mark_complete": "Mark complete",
   "mark_uncomplete": "Mark uncomplete",
   "bingo": "Bingo!",
-  "card_no": "Card no.",
+  "card_no": "Card number",
   "game_id_title": "Your games id is",
   "error_gameid_empty": "Please enter a game id",
   "error_gameid_length": "Game id must be 4 characters long",
@@ -22,5 +22,6 @@
   "add_event": "Add event",
   "invent_event": "Invent event",
   "share_game": "Share game",
-  "share_game_text": "Hey, wanna play Bahn Bingo with me? My game id is"
+  "share_game_text": "Hey, wanna play Bahn Bingo with me? My game id is",
+  "game_event": "Game event"
 }

@@ -46,41 +46,32 @@ class _BingoGridItemState extends State<BingoGridItem>
 
   @override
   Widget build(BuildContext context) {
-    return Observer(builder: (context) {
-      if (_controller.isCompleted) {
-        _controller.reverse();
-      } else {
-        _controller.forward();
-      }
-      return AnimatedBuilder(
-        animation: _animation,
-        builder: (context, child) => Transform(
-          alignment: FractionalOffset.center,
-          transform: Matrix4.identity()
-            ..setEntry(3, 2, 0.0015)
-            ..rotateY(pi * _animation.value),
-          child: _animation.value <= 0.5
-              ? _buildFront()
-              : Transform.scale(scaleX: -1, child: _buildBack()),
-        ),
-      );
-    });
+    return Container(
+        padding: const EdgeInsets.all(16.0),
+        color: Theme.of(context).colorScheme.surface,
+        child: Observer(builder: (context) {
+          if (_controller.isCompleted) {
+            _controller.reverse();
+          } else {
+            _controller.forward();
+          }
+          return AnimatedBuilder(
+            animation: _animation,
+            builder: (context, child) => Transform(
+              alignment: FractionalOffset.center,
+              transform: Matrix4.identity()
+                ..setEntry(3, 2, 0.0015)
+                ..rotateY(pi * _animation.value),
+              child: _animation.value <= 0.5
+                  ? _buildFront()
+                  : Transform.scale(scaleX: -1, child: _buildBack()),
+            ),
+          );
+        }));
   }
 
   Widget _buildFront() {
-    return Container(
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.background,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.2),
-              spreadRadius: 0,
-              blurRadius: 10,
-              offset: const Offset(0, -5),
-            ),
-          ],
-        ),
-        child: Center(child: Text(widget.cardNumber.toString())));
+    return Container(child: Center(child: Text(widget.cardNumber.toString())));
   }
 
   Widget _buildBack() {
@@ -89,7 +80,6 @@ class _BingoGridItemState extends State<BingoGridItem>
       image: DecorationImage(
         image: AssetImage("assets/images/logo.png"),
       ),
-      color: Theme.of(context).colorScheme.primary,
       boxShadow: [
         BoxShadow(
           color: Colors.black.withOpacity(0.2),

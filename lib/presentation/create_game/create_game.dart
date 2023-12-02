@@ -250,9 +250,11 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
           min: 3,
           max: 5,
           divisions: 2,
+          thumbColor: Theme.of(context).colorScheme.primaryContainer,
+          activeColor: Theme.of(context).colorScheme.secondaryContainer,
+          inactiveColor: Theme.of(context).colorScheme.secondaryContainer,
           label: AppLocalizations.of(context).translate('field_size') +
-              ": " +
-              _eventsStore.fieldSize.toString(),
+              ": ${_eventsStore.fieldSize.toString()}",
           onChanged: (double value) {
             _eventsStore.setFieldSize(value.toInt());
           },

@@ -28,28 +28,36 @@ class AppButton extends StatelessWidget {
         height: ScreenUtil().setHeight(48.0),
         decoration: BoxDecoration(
           color: type == ButtonType.PLAIN
-              ? Colors.white
+              ? Theme.of(context).colorScheme.secondaryContainer
               : Theme.of(context).colorScheme.primary,
           borderRadius: BorderRadius.circular(8.0),
-          boxShadow: const [
-            BoxShadow(
-              color: Color.fromRGBO(169, 176, 185, 0.42),
-              spreadRadius: 0,
-              blurRadius: 8.0,
-              offset: Offset(0, 2),
-            )
-          ],
+          boxShadow: _boxShadow(context),
         ),
         child: Center(
           child: Text(text,
               style: Theme.of(context).textTheme.labelLarge?.copyWith(
                     color: type == ButtonType.PLAIN
-                        ? Theme.of(context).colorScheme.primary
-                        : Colors.white,
+                        ? Theme.of(context).colorScheme.onSecondaryContainer
+                        : Theme.of(context).colorScheme.onPrimaryContainer,
                     fontWeight: FontWeight.w600,
                   )),
         ),
       ),
     );
+  }
+
+  List<BoxShadow> _boxShadow(BuildContext context) {
+    if (Theme.of(context).brightness == Brightness.light) {
+      return [
+        BoxShadow(
+          color: Colors.black.withOpacity(0.1),
+          spreadRadius: 0,
+          blurRadius: 10,
+          offset: const Offset(0, 5),
+        ),
+      ];
+    } else {
+      return [];
+    }
   }
 }

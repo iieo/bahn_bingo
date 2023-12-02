@@ -24,12 +24,12 @@ class EventListItem extends StatelessWidget {
     final random = Math.Random(task.hashCode);
     double randomDouble = random.nextDouble();
     double fullWidth = MediaQuery.of(context).size.width - 20 * 2;
-    double minBoxWidth = fullWidth / 5;
+    double minBoxWidth = fullWidth / 3;
     double randomBoxWidth = fullWidth - minBoxWidth * 2;
     double widthBox1 = minBoxWidth + randomBoxWidth * randomDouble;
     double widthBox2 = minBoxWidth + randomBoxWidth * (1 - randomDouble);
-    int randomColor1 = random.nextInt(AppColors.boxColors.length);
-    int randomColor2 = random.nextInt(AppColors.boxColors.length);
+    //int randomColor1 = random.nextInt(AppColors.boxColors.length);
+    //int randomColor2 = random.nextInt(AppColors.boxColors.length);
 
     //get random time
     TimeOfDay randomTimeOfDay =
@@ -50,7 +50,7 @@ class EventListItem extends StatelessWidget {
     return Container(
         margin: const EdgeInsets.only(bottom: 16.0),
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.primaryContainer,
+          color: Theme.of(context).colorScheme.surface,
           boxShadow: [
             BoxShadow(
               color: Colors.black.withOpacity(0.3),
@@ -72,7 +72,7 @@ class EventListItem extends StatelessWidget {
                         children: [
                           Text(
                               "${randomTimeOfDay.format(context)} - ${randomTimeOfDay2.format(context)}",
-                              style: Theme.of(context).textTheme.labelLarge),
+                              style: Theme.of(context).textTheme.labelMedium),
                           Text(
                               " | $duration | ${randomTransferCount.toString()} transfers",
                               style: Theme.of(context).textTheme.labelSmall)
@@ -90,17 +90,17 @@ class EventListItem extends StatelessWidget {
                             width: widthBox1,
                             height: 22.0,
                             decoration: BoxDecoration(
-                              color: AppColors.boxColors[randomColor1],
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .primaryContainer,
                               borderRadius: BorderRadius.circular(3.0),
                             ),
                             child: Text(
-                              AppLocalizations.of(context)
-                                      .translate("card_no") +
-                                  " $index",
+                              AppLocalizations.of(context).translate("card_no"),
                               textAlign: TextAlign.center,
                               style: Theme.of(context)
                                   .textTheme
-                                  .labelLarge
+                                  .labelMedium
                                   ?.apply(
                                       color: Theme.of(context)
                                           .colorScheme
@@ -113,15 +113,17 @@ class EventListItem extends StatelessWidget {
                             width: widthBox2,
                             height: 22.0,
                             decoration: BoxDecoration(
-                              color: AppColors.boxColors[randomColor2],
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .secondaryContainer,
                               borderRadius: BorderRadius.circular(3.0),
                             ),
                             child: Text(
-                              "ICE 420",
+                              index.toString(),
                               textAlign: TextAlign.center,
                               style: Theme.of(context)
                                   .textTheme
-                                  .labelLarge
+                                  .labelMedium
                                   ?.apply(
                                       color: Theme.of(context)
                                           .colorScheme
@@ -133,7 +135,7 @@ class EventListItem extends StatelessWidget {
                       const SizedBox(
                         height: 8.0,
                       ),
-                      Text(task),
+                      Text(task, style: Theme.of(context).textTheme.labelLarge),
                     ])),
             Container(
               color: Theme.of(context).colorScheme.secondaryContainer,
@@ -154,7 +156,7 @@ class EventListItem extends StatelessWidget {
                                     .translate("mark_uncomplete")
                                 : AppLocalizations.of(context)
                                     .translate("mark_complete"),
-                            style: Theme.of(context).textTheme.labelLarge,
+                            style: Theme.of(context).textTheme.labelMedium,
                           ))
                 ],
               ),

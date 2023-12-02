@@ -24,8 +24,13 @@ class _GameFieldScreenState extends State<GameFieldScreen> {
     return Scaffold(
       primary: true,
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context).translate('game_id_title') +
-            " ${_gameStore.game?.id ?? 'error'}"),
+        title: Text(
+          AppLocalizations.of(context).translate('game_id_title') +
+              " ${_gameStore.game?.id ?? 'error'}",
+          style: Theme.of(context).textTheme.labelLarge?.apply(
+                color: Theme.of(context).colorScheme.onPrimary,
+              ),
+        ),
         backgroundColor: Theme.of(context).colorScheme.primary,
         actions: [GameFieldActionMenu()],
       ),

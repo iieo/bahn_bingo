@@ -80,11 +80,16 @@ dev_dependencies:
 
 flutter_launcher_icons:
   adaptive_icon_background: "#ffffff"
-  adaptive_icon_foreground: "assets/icons/ic_launcher.png"
-  image_path: "assets/icons/ic_launcher.png"
+  adaptive_icon_foreground: "assets/icons/android/play_store_512.png"
+  image_path: "assets/icons/ios/AppIcon-ipad.png"
   android: true
   ios: true
   remove_alpha_ios: true
+  web:
+    generate: true
+    image_path: "assets/icons/web/icon-512.png"
+    background_color: "#ffffff"
+    theme_color: "#fa1c28"
 
 flutter:
 

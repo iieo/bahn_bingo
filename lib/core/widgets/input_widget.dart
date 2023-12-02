@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class InputWidget extends StatelessWidget {
@@ -39,12 +40,12 @@ class InputWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(topLabel),
-        const SizedBox(height: 5.0),
+        Text(topLabel, style: Theme.of(context).textTheme.labelLarge),
+        const SizedBox(height: 12.0),
         Container(
-          height: ScreenUtil().setHeight(height),
+          //height: ScreenUtil().setHeight(height),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: Theme.of(context).colorScheme.secondaryContainer,
             borderRadius: BorderRadius.circular(8.0),
           ),
           child: TextFormField(
@@ -53,29 +54,33 @@ class InputWidget extends StatelessWidget {
             focusNode: focusNode,
             onFieldSubmitted: onFieldSubmitted,
             onChanged: onChanged,
-            maxLength: maxLength,
             autofocus: autoFocus,
             textInputAction: inputAction,
             obscureText: isObscure,
+            inputFormatters: [
+              LengthLimitingTextInputFormatter(maxLength),
+            ],
             decoration: InputDecoration(
               prefixIcon: icon == null
                   ? null
-                  : Icon(icon, color: Theme.of(context).colorScheme.onPrimary),
-              enabledBorder: const OutlineInputBorder(
+                  : Icon(icon,
+                      color:
+                          Theme.of(context).colorScheme.onSecondaryContainer),
+              enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(
-                  color: Color.fromRGBO(74, 77, 84, 0.2),
+                  color: Theme.of(context).colorScheme.surface,
                 ),
               ),
               focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(
-                  color: Theme.of(context).colorScheme.primary,
+                  color: Theme.of(context).colorScheme.secondaryContainer,
                 ),
               ),
               errorText: errorText,
               hintText: hintText,
-              hintStyle: const TextStyle(
+              hintStyle: TextStyle(
                 fontSize: 14.0,
-                color: Color.fromRGBO(105, 108, 121, 0.7),
+                color: Theme.of(context).colorScheme.onSecondaryContainer,
               ),
             ),
           ),

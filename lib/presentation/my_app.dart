@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
               title: Strings.appName,
               theme: _themeStore.darkMode
                   ? AppThemeData.darkThemeData
-                  : AppThemeData.lightThemeData,
+                  : AppThemeData.darkThemeData,
               routes: Routes.routes,
               locale: Locale(_languageStore.locale),
               supportedLocales: _languageStore.supportedLanguages

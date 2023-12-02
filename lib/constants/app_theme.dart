@@ -85,19 +85,20 @@ class AppThemeData {
   );
 
   static const ColorScheme darkColorScheme = ColorScheme(
-    primary: Color.fromARGB(255, 22, 23, 90),
-    primaryContainer: Color(0xFF1CDEC9),
+    primary: Color(0xFFfa1c28),
+    onPrimary: _white,
+    primaryContainer: Color(0xff888888),
+    secondaryContainer: Color(0xff555555),
+    onSecondaryContainer: _white,
     secondary: Color(0xFF4D1F7C),
-    secondaryContainer: Color(0xFF451B6F),
-    background: Color(0xFF241E30),
-    surface: Color(0xFF1F1929),
-    onBackground: Color(0x0DFFFFFF),
+    onSecondary: _white,
+    background: Color(0xff252020),
+    surface: Color(0xff333333),
+    onSurface: _white,
+    onBackground: _black,
     // White with 0.05 opacity
     error: _darkFillColor,
     onError: _darkFillColor,
-    onPrimary: _darkFillColor,
-    onSecondary: _darkFillColor,
-    onSurface: _darkFillColor,
     brightness: Brightness.dark,
   );
 
@@ -114,10 +115,11 @@ class AppThemeData {
     bodyLarge: GoogleFonts.montserrat(fontWeight: _regular, fontSize: 14.0),
     bodyMedium: GoogleFonts.montserrat(fontWeight: _regular, fontSize: 16.0),
     bodySmall: GoogleFonts.oswald(fontWeight: _semiBold, fontSize: 16.0),
-    titleLarge: GoogleFonts.montserrat(fontWeight: _bold, fontSize: 16.0),
+    titleLarge: GoogleFonts.montserrat(fontWeight: _bold, fontSize: 20.0),
     titleMedium: GoogleFonts.montserrat(fontWeight: _medium, fontSize: 16.0),
     titleSmall: GoogleFonts.montserrat(fontWeight: _medium, fontSize: 14.0),
-    labelLarge: GoogleFonts.montserrat(fontWeight: _semiBold, fontSize: 14.0),
+    labelLarge: GoogleFonts.montserrat(fontWeight: _semiBold, fontSize: 18.0),
+    labelMedium: GoogleFonts.montserrat(fontWeight: _semiBold, fontSize: 14.0),
     labelSmall: GoogleFonts.montserrat(fontWeight: _medium, fontSize: 12.0),
   );
 }
