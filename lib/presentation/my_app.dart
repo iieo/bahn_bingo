@@ -3,7 +3,9 @@ import 'package:bahn_bingo/constants/strings.dart';
 import 'package:bahn_bingo/core/stores/game/game_store.dart';
 import 'package:bahn_bingo/core/stores/language/language_store.dart';
 import 'package:bahn_bingo/core/stores/theme/theme_store.dart';
+import 'package:bahn_bingo/main.dart';
 import 'package:bahn_bingo/presentation/game_field/game_field.dart';
+import 'package:bahn_bingo/presentation/auth/auth_screen.dart';
 import 'package:bahn_bingo/presentation/welcome/welcome.dart';
 import 'package:bahn_bingo/utils/locale/app_localization.dart';
 import 'package:bahn_bingo/utils/routes/routes.dart';
@@ -56,6 +58,9 @@ class MyApp extends StatelessWidget {
   }
 
   Widget _loadScreen() {
+    if (supabase.auth.currentSession == null) {
+      return AuthScreen();
+    }
     return FutureBuilder(
       future: _gameStore.loadActiveGame(),
       builder: (context, snapshot) {
