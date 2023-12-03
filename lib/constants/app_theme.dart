@@ -45,9 +45,9 @@ class AppThemeData {
       appBarTheme: AppBarTheme(
         backgroundColor: colorScheme.background,
         elevation: 0,
-        iconTheme: IconThemeData(color: colorScheme.primary),
+        iconTheme: IconThemeData(color: Colors.white),
       ),
-      iconTheme: IconThemeData(color: colorScheme.onPrimary),
+      iconTheme: IconThemeData(color: Colors.white),
       canvasColor: colorScheme.background,
       scaffoldBackgroundColor: colorScheme.background,
       highlightColor: Colors.transparent,
